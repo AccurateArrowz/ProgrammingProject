@@ -3,13 +3,6 @@ from tkinter import *
 from tkinter import messagebox ,ttk
 from PIL import ImageTk,Image
 import ast
-# window= Tk()
-# window.geometry('1250x1000')
-# window.title("Learners")
-# window.configure(bg='#E2C5ED')
-# window.minsize(width=900,height=600)   
-# window.maxsize(width=1600,height=1000)
-
 
 class Login:
     def __init__(self,window):
@@ -269,16 +262,16 @@ class Login:
 
 
 # button for register in signup page
-            button_register=Button(frame_2,pady=3,width=8,height=-9,border=0,text="Register",bg="#39339B",fg="White",font=("Inter Normal",16),command=signup_function)
+            button_register=Button(frame_2,pady=3,width=8,height=-9,border=0,text="Register",bg="#39339B",fg="White",font=("Inter Normal",16),command=window.destroy)
             button_register.place(x=180,y=495)
 
             # Photo__Of__Signup__window-------------------------------------------------------------------
-            # image_2=PhotoImage(file='Rectangle 6.png')
-            # image_2=image_2.zoom(30) 
-            # image_2=image_2.subsample(32)
-            # why=Label(window,image=image_2,bg="#F3EEE5")
-            # why.place(x=720,y=115)
-            # Label(window,image=image_2,command=signup)
+            image_2=PhotoImage(file='Rectangle 6.png')
+            image_2=image_2.zoom(30) 
+            image_2=image_2.subsample(32)
+            why=Label(window,image=image_2,bg="#F3EEE5")
+            why.place(x=720,y=115)
+            Label(window,image=image_2,command=signup)
             
         
 
