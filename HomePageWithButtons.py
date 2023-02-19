@@ -39,7 +39,7 @@ class Login:
 
 
 # label of log in page for learners title--------------------------------------------
-        heading=Label(text="Learners",fg="red",bg='#E2C5ED',font=("Brush Script MT",76,'bold'))
+        heading=Label(text="Learners",fg="black",bg='#E2C5ED',font=("Brush Script MT",128,'bold'))
         heading.place(x=500,y=-5)
 
 
