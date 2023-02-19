@@ -42,30 +42,21 @@ class Login:
         heading=Label(text="Learners",fg="black",bg='#E2C5ED',font=("Brush Script MT",128,'bold'))
         heading.place(x=500,y=-5)
 
-
         details=Label(frame,text="Your Hub for learning",font=("Calibiri",18,"bold"),bg='#F3EEE5',fg="black")
         details.place(x=29,y=26)
 
-# UserName of log in page----------------------------------------------------                                       
+# Username of log in page----------------------------------------------------                                       
         username=Label(frame,text="Username",font=('Inter Normal',14),bg='#F3EEE5',fg="black")
         username.place(x=25,y=80)
         self.username_1=Entry(frame,bg="White",width=21,font=('Inter Normal',16),bd=0)
         self.username_1.place(x=30,y=120)
-
-
-
-
-
-
+        
 # username_______icon------------------------------------------------------
         self.imgpath_1 = 'user (2).png'
         self.Username_image = PhotoImage(file=self.imgpath_1)
-        
-
         Label(window,image=self.Username_image,bg='#F3EEE5').place(x=950,y=275)
 
 # Password of log in page---------------------------------------------------
-
         password=Label(frame,text="Password",font=("Inter Normal",14),bg='#F3EEE5',fg="black")
         password.place(x=25,y=160)
         password_1=Entry(frame,bg="White",width=21,font=('Inter Normal',16),bd=0)
@@ -75,14 +66,12 @@ class Login:
         label=Label(frame,text="Don't have an account?",fg='black',bg='#F3EEE5',font=('Inter Normal',14),   padx=20,pady=20)
         label.place(x=45,y=280)
 
-
         # password____icon-------------------------------------------------
         self.imgpath_2 = 'ABC.png'
         self.password_image = PhotoImage(file=self.imgpath_2)
         self.password_image = self.password_image.zoom(30) 
         self.password_image = self.password_image.subsample(32) 
-        
-
+   
         Label(window,image=self.password_image,bg='#F3EEE5').place(x=952,y=356)
 
         # eye icon-----------------------------------------------------------------------
@@ -90,34 +79,18 @@ class Login:
         show=Button(frame,image=show_image,bg="#F3EEE5",bd=0)
         show.place(x=289,y=199)
 
-        # def login_function(self):
-        #     if self.username_1.get()=="" or self.username_1.get()=="":
-        #         messagebox.showerror("Error","Fill the both fields",parent=self.window)
-        #     elif self.username_1.get()!="r" or self.username_1.get()!="1":
-        #         messagebox.showerror("Invalid username",parent=self.window)
-        #     else:
-        #         messagebox.showinfo("Welcome",f"Welcome {self.username_1.get()}\nYour Password: {self.username_1.get()}",parent=self.window)
+ 
 
-
+#label for (usernm and pw empty option)
         errorLabel = Label(frame,text='',font=(8),fg='red')
         errorLabel.grid(row =4,column =0,padx=10,sticky='W')
         errorLabel.place(x=33,y=224)
 
 
-        errorLabel1 = Label(frame,text='',font=(8),fg='red')
-        errorLabel1.grid(row =4,column =0,padx=10,sticky='W')
-        errorLabel1.place(x=33,y=224)
-
-        
-
-  
 # next window for signup/register page--------------------------------------------------------
         def signup():
 
-                    
-            
-
-
+               
             window=Toplevel()
             window.title("Sign Up")
             window.maxsize(width=1290,height=1000)
@@ -127,7 +100,7 @@ class Login:
             window.grab_set()
 
             
-             # frame for register--------------------------------------------------------------------------
+           # frame for register--------------------------------------------------------------------------
             frame_2=Frame(window,width=500,height=583,bg='#E2C5ED')
             frame_2.place(x=80,y=68)
 
@@ -170,7 +143,7 @@ class Login:
             user_2.bind("<FocusOut>",on_leave_1)
 
 
-# #     #gender--------------------------------------------------------
+     #gender--------------------------------------------------------
             gender=Label(frame_2,text="Gender",fg='black',bg='#E2C5ED',font=('Inter Normal',15))
             gender.place(x=75,y=200)
 
@@ -184,9 +157,7 @@ class Login:
             ca_2=Checkbutton(window,text=("Others"),bg='#E2C5ED',fg='Black',font=('Arial',14),variable=var_2)
             ca_2.place(x=389,y=265)
 
-        
-    
-
+       
     # labels and entry box for date of birth---------------------------------
             def on_enter_1(e):
                 user_3.delete(0,'end')
@@ -199,9 +170,12 @@ class Login:
             user_3.insert(0,' Year')
             user_3.bind("<FocusIn>",on_enter_1)
             user_3.bind("<FocusOut>",on_leave_1)
-    
+            
+#label of date of birth
             dob=Label(frame_2,text="Date of Birth",font=('Inter Normal',15),bg='#E2C5ED',fg="black")
             dob.place(x=75,y=237)
+
+#image icon of dateobirth
 
             DOBimage=PhotoImage(file='DOB.png')
             DOBimage= DOBimage.zoom(15) #with 250, I ended up running out of memory
@@ -294,19 +268,7 @@ class Login:
             user_8.bind("<FocusOut>",on_leave_1)
 
 
-
-
-
-            # def signup_function():
-            #     if (user_7.get()=='') or (user_8.get()==''):
-
-            #         messagebox.showerror("Error","This field is required",parent=window)
-                
-            #     elif user_7.get()<6 or user_7.get()<6:
-            #         messagebox.showerror("Error","Password should contain at least 6 character",parent=window)
-            #     else:
-            #         messagebox.showinfo("Welcome",f"Welcome {user_7.get()}\nYour Password: {user_7.get()}",parent=window)
-
+# button for register in signup page
             button_register=Button(frame_2,pady=3,width=8,height=-9,border=0,text="Register",bg="#39339B",fg="White",font=("Inter Normal",16),command=signup_function)
             button_register.place(x=180,y=495)
 
@@ -320,7 +282,7 @@ class Login:
             
         
 
-# # window of main home page/dashboard-------------------------------------------------
+ # window of main home page/dashboard-------------------------------------------------
         def home_page():
 
                 if self.username_1.get()=='' and password_1.get()=='':
@@ -333,8 +295,6 @@ class Login:
                     errorLabel.config(text='Password is empty')
                     return
 
-                
-        
                
                 window=Toplevel()
                 window.title("Home Page")
@@ -345,43 +305,24 @@ class Login:
 
                 
 
-
-
-    # navigation frame-------------------------------------------------------------
+ # navigation frame-------------------------------------------------------------
                 frame_home=Frame(window,width=1280,height=66,bg="#BE63D9")
                 frame_home.place(x=0,y=0)
 
-
-    # profile image-----------------------------------------------------------------
-    #             circleimage=PhotoImage(file="circle.png")
-    #             circleimage= circleimage.zoom(20) #with 250, I ended up running out of memory
-    #             circleimage = circleimage.subsample(20)
-    # panel_11= Button(frame_home,image = circleimage,bg="#BE63D9",bd=0,activebackground="#BE63D9")
-    # panel_11.place(x=1140,y=15)
-
-    
-
-    # profileimage=PhotoImage(file="profile.png")
-#     # profileimage= profileimage.zoom(16) #with 250, I ended up running out of memory
-#     # profileimage = profileimage.subsample(23)
-#     # panel_11= Label(frame_home,image = profileimage,bg="white")
-#     # panel_11.place(x=1151,y=19)
-#     # profilelabel=Label(frame_home,text="Profile",font=("calibri",7,"bold"),bg="white",fg="black")
-#     # profilelabel.place(x=1150,y=40)
+# profile image button 
+                circleimage=PhotoImage(file="profileuser.png")
+                panel_11= Button(frame_home,image = circleimage,bg="#BE63D9",bd=0,activebackground="#BE63D9")
+                panel_11.place(x=1155,y=25)
     
     # labels of learners in navigation frame------------------------------------------------------
                 learners=Label(frame_home,text="Learners",font=("Brush Script MT",28,'bold'),bg="#BE63D9",fg="#221C35")
                 learners.place(x=17,y=12)
 
-    
     # frame which is in white bg that is located where the button of software design,math and programming is-------
                 frameofhomepage=Frame(window,width=1300,height=1600,bg="white")
                 frameofhomepage.place(x=0,y=66)
 
-    
-    
-
-#     # button of mathematics-------------------------------------------------------------------
+    # button of mathematics-------------------------------------------------------------------
                 math_img=PhotoImage(file="MathsCard.png")
                 math_img.image=math_img
                 math_img_lbl=Button(frameofhomepage,bg="white",image=math_img,bd=0,activebackground="white",borderwidth=0)
@@ -398,16 +339,6 @@ class Login:
                 software_img.image=software_img
                 software_img=Button(frameofhomepage,bg="white",image=software_img,bd=0,activebackground="white",borderwidth=0)
                 software_img.place(x=820,y=70)
-        
-
-    # def login_function(self):
-    #     if self.username_1.get()=="" or self.username_1.get()=="":
-    #         messagebox.showerror("Error","Fill the both fields",parent=self.window)
-    #     elif self.username_1.get()!="r" or self.username_1.get()!="1":
-    #         messagebox.showerror("Invalid username",parent=self.window)
-    #     else:
-    #         messagebox.showinfo("Welcome",f"Welcome {self.username_1.get()}\nYour Password: {self.username_1.get()}",parent=self.window)
-
 
  # button of subjects in navigation part------------------------------------------------------
                 def onbutton1(e):
@@ -531,8 +462,6 @@ class Login:
 
                 
                     
-                
-
             # yo eroor ayepaxi balla photo visible bhayoo---------------------------------------------------------
                 def onbutton(e):
                         Button1['bg']='#E2C5ED'
@@ -542,20 +471,12 @@ class Login:
                 Button1=Button(frame_home,text="Subjects",font=('Inter Normal',20),bg='white',fg="black",bd=0,command=subject)
                 Button1.place(x=360,y=20)
 
-            
-
-        
-
-    
+#login button of log in page
     
         log_in=Button(frame,width=9,pady=3,text="Log in",bg="#2586DA",fg="White",border=0,font=('Calibri',13),command=home_page)
-        
-        
         log_in.place(x=113,y=252)
 
-        
-
-
+#signin button in log in page
         sign_in=Button(frame,width=6,text='Sign up',border=0,bg='#F3EEE5',cursor='hand2',fg="Blue",font=("Calibri",15,'bold',UNDERLINE),command=signup)
         sign_in.place(x=125,y=323) 
 
@@ -566,13 +487,7 @@ window=mainloop()
         
     
 
-    # def login_function(self):
-    #     if self.username_1.get()=="" or self.username_1.get()=="":
-    #         messagebox.showerror("Error","Fill the both fields",parent=self.window)
-    #     elif self.username_1.get()!="r" or self.username_1.get()!="1":
-    #         messagebox.showerror("Invalid username",parent=self.window)
-    #     else:
-    #         messagebox.showinfo("Welcome",f"Welcome {self.username_1.get()}\nYour Password: {self.username_1.get()}",parent=self.window)
+    
             
 
 
