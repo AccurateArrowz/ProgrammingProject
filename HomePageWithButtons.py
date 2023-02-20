@@ -7,12 +7,13 @@ import ast
 class Login:
     def __init__(self,window):
         self.window=window
-        
         self.window.geometry('1250x1000')
         self.window.title("Learners")
         self.window.configure(bg='#E2C5ED')
         self.window.minsize(width=900,height=600)   
         self.window.maxsize(width=1600,height=1000)
+        img=PhotoImage(file="icon.png")
+        self.window.iconphoto(False,img)
 
 
 
@@ -21,35 +22,36 @@ class Login:
         self.img = PhotoImage(file=self.imgpath)
         self.img = self.img.zoom(33) 
         self.img = self.img.subsample(32) 
-        
-
-        Label(window,image=self.img,bg='#E2C5ED').place(x=10,y=55)
+        Label(window,image=self.img,bg='#E2C5ED').place(x=18,y=95)
 
 
 # Main___Frame of log in page---------------------------------------------------------
         frame=Frame(self.window,width=320,height=390,bg='#F3EEE5')
-        frame.place(x=835,y=195)
-
+        frame.place(x=835,y=225)
 
 # label of log in page for learners title--------------------------------------------
-        heading=Label(text="Learners",fg="black",bg='#E2C5ED',font=("Brush Script MT",128,'bold'))
-        heading.place(x=500,y=-5)
+        heading=Label(text="Learners",fg="black",bg='#E2C5ED',font=("Brush Script MT",110,'bold'))
+        heading.place(x=460,y=-20)
+
 
         details=Label(frame,text="Your Hub for learning",font=("Calibiri",18,"bold"),bg='#F3EEE5',fg="black")
         details.place(x=29,y=26)
 
-# Username of log in page----------------------------------------------------                                       
+# UserName of log in page----------------------------------------------------                                       
         username=Label(frame,text="Username",font=('Inter Normal',14),bg='#F3EEE5',fg="black")
         username.place(x=25,y=80)
         self.username_1=Entry(frame,bg="White",width=21,font=('Inter Normal',16),bd=0)
         self.username_1.place(x=30,y=120)
-        
+
 # username_______icon------------------------------------------------------
         self.imgpath_1 = 'user (2).png'
         self.Username_image = PhotoImage(file=self.imgpath_1)
-        Label(window,image=self.Username_image,bg='#F3EEE5').place(x=950,y=275)
+        
+
+        Label(window,image=self.Username_image,bg='#F3EEE5').place(x=950,y=305)
 
 # Password of log in page---------------------------------------------------
+
         password=Label(frame,text="Password",font=("Inter Normal",14),bg='#F3EEE5',fg="black")
         password.place(x=25,y=160)
         password_1=Entry(frame,bg="White",width=21,font=('Inter Normal',16),bd=0)
@@ -59,50 +61,42 @@ class Login:
         label=Label(frame,text="Don't have an account?",fg='black',bg='#F3EEE5',font=('Inter Normal',14),   padx=20,pady=20)
         label.place(x=45,y=280)
 
+
         # password____icon-------------------------------------------------
         self.imgpath_2 = 'ABC.png'
-        self.password_image = PhotoImage(file=self.imgpath_2)
-        self.password_image = self.password_image.zoom(30) 
-        self.password_image = self.password_image.subsample(32) 
-   
-        Label(window,image=self.password_image,bg='#F3EEE5').place(x=952,y=356)
+        self.password_image = PhotoImage(file=self.imgpath_2) 
+        Label(window,image=self.password_image,bg='#F3EEE5').place(x=952,y=385)
 
         # eye icon-----------------------------------------------------------------------
-        show_image=PhotoImage(file='view.png')
-        show=Button(frame,image=show_image,bg="#F3EEE5",bd=0)
-        show.place(x=289,y=199)
+        self.show_image=PhotoImage(file='view.png')
+        self.show=Button(frame,image=self.show_image,bg="#F3EEE5",bd=0)
+        self.show.place(x=289,y=199)
 
- 
-
-#label for (usernm and pw empty option)
+# label for username,pw empty in log in page
         errorLabel = Label(frame,text='',font=(8),fg='red')
         errorLabel.grid(row =4,column =0,padx=10,sticky='W')
         errorLabel.place(x=33,y=224)
 
-
 # next window for signup/register page--------------------------------------------------------
         def signup():
 
-               
             window=Toplevel()
             window.title("Sign Up")
             window.maxsize(width=1290,height=1000)
             window.minsize(width=900,height=600)
             window.config(bg='#F3EEE5')
+            img=PhotoImage(file="icon.png")
+            window.iconphoto(False,img)
             window.focus_force()
             window.grab_set()
-
-            
-           # frame for register--------------------------------------------------------------------------
-            frame_2=Frame(window,width=500,height=583,bg='#E2C5ED')
-            frame_2.place(x=80,y=68)
-
-    
-    # # labels of register page frame--------------------------------------------------------------
+           
+             # frame for register--------------------------------------------------------------------------
+            frame_2=Frame(window,width=500,height=578,bg='#E2C5ED')
+            frame_2.place(x=80,y=75)
+  
+ # labels of register page frame--------------------------------------------------------------
             text=Label(frame_2,text="CREATE YOUR ACCOUNT",fg='#4F1D63',bg='#E2C5ED',font=('Calibri',29,'bold'))
             text.place(x=40,y=35)
-
-            
 
     # labels and entry box for first name---------------------------------------------------------
             def on_enter_1(e):
@@ -120,7 +114,7 @@ class Login:
             user_1.bind("<FocusOut>",on_leave_1)
 
 
-#     # labels and entry box for last name--------------------------------------------------
+   # labels and entry box for last name--------------------------------------------------
             def on_enter_1(e):
                 x=user_2.get()
                 if x=='     Last Name':
@@ -141,16 +135,15 @@ class Login:
             gender.place(x=75,y=200)
 
             var=IntVar()
-            ca=Checkbutton(window,text=("Male"),bg='#E2C5ED',fg='Black',font=('Arial',14),variable=var)
-            ca.place(x=230,y=265)
-            var_1=IntVar
-            ca_1=Checkbutton(window,text=("Female"),bg='#E2C5ED',fg='Black',font=('Arial',14),variable=var_1)
-            ca_1.place(x=299,y=265)
-            var_2=IntVar
-            ca_2=Checkbutton(window,text=("Others"),bg='#E2C5ED',fg='Black',font=('Arial',14),variable=var_2)
-            ca_2.place(x=389,y=265)
+            ca=Radiobutton(window,text=("Male"),bg='#E2C5ED',fg='Black',font=('Arial',14),variable=var)
+            ca.place(x=230,y=270)
+            var_1=IntVar()
+            ca_1=Radiobutton(window,text=("Female"),bg='#E2C5ED',fg='Black',font=('Arial',14),variable=var_1)
+            ca_1.place(x=299,y=270)
+            var_2=IntVar()
+            ca_2=Radiobutton(window,text=("Others"),bg='#E2C5ED',fg='Black',font=('Arial',14),variable=var_2)
+            ca_2.place(x=389,y=270)
 
-       
     # labels and entry box for date of birth---------------------------------
             def on_enter_1(e):
                 user_3.delete(0,'end')
@@ -163,18 +156,16 @@ class Login:
             user_3.insert(0,' Year')
             user_3.bind("<FocusIn>",on_enter_1)
             user_3.bind("<FocusOut>",on_leave_1)
-            
-#label of date of birth
+    
             dob=Label(frame_2,text="Date of Birth",font=('Inter Normal',15),bg='#E2C5ED',fg="black")
             dob.place(x=75,y=237)
 
-#image icon of dateobirth
-
+# icon of date of birth
             DOBimage=PhotoImage(file='DOB.png')
             DOBimage= DOBimage.zoom(15) #with 250, I ended up running out of memory
             DOBimage = DOBimage.subsample(20)
             imageofdob=Label(window,image=DOBimage,bg='#E2C5ED')
-            imageofdob.place(x=271,y=306)
+            imageofdob.place(x=272,y=313)
     
             def on_enter_1(e):
                 user_4.delete(0,'end')
@@ -215,13 +206,6 @@ class Login:
             user_6.insert(0,'     Username')
             user_6.bind("<FocusIn>",on_enter_1)
             user_6.bind("<FocusOut>",on_leave_1)
-    
-            # userimage=PhotoImage(file='Group.png')
-            # userimage= userimage.zoom(16) #with 250, I ended up running out of memory
-            # userimage = userimage.subsample(20)
-            # imageofuser=Label(window,image=userimage,bg='white')
-            # imageofuser.place(x=150,y=432)
-
 
 #     # labels and entry box for Type(student,teacher)--------------------------------------
             hi=Label(frame_2,text="Type",width=15,bg="#E2C5ED",font=("Inter Normal",16))
@@ -260,10 +244,8 @@ class Login:
             user_8.bind("<FocusIn>",on_enter_1)
             user_8.bind("<FocusOut>",on_leave_1)
 
-
-# button for register in signup page
             button_register=Button(frame_2,pady=3,width=8,height=-9,border=0,text="Register",bg="#39339B",fg="White",font=("Inter Normal",16),command=window.destroy)
-            button_register.place(x=180,y=495)
+            button_register.place(x=180,y=500)
 
             # Photo__Of__Signup__window-------------------------------------------------------------------
             image_2=PhotoImage(file='Rectangle 6.png')
@@ -271,10 +253,7 @@ class Login:
             image_2=image_2.subsample(32)
             why=Label(window,image=image_2,bg="#F3EEE5")
             why.place(x=720,y=115)
-            Label(window,image=image_2,command=signup)
             
-        
-
  # window of main home page/dashboard-------------------------------------------------
         def home_page():
 
@@ -287,30 +266,29 @@ class Login:
                 elif password_1.get()=='':
                     errorLabel.config(text='Password is empty')
                     return
-
                
                 window=Toplevel()
                 window.title("Home Page")
                 window.geometry('1250x1000')
                 window.config(bg='white')
+                img=PhotoImage(file="icon.png")
+                self.window.iconphoto(False,img)
                 window.focus_force()
                 window.grab_set()
 
-                
-
- # navigation frame-------------------------------------------------------------
+    # navigation frame-------------------------------------------------------------
                 frame_home=Frame(window,width=1280,height=66,bg="#BE63D9")
                 frame_home.place(x=0,y=0)
 
-# profile image button 
+    # profile image-----------------------------------------------------------------
                 circleimage=PhotoImage(file="profileuser.png")
                 panel_11= Button(frame_home,image = circleimage,bg="#BE63D9",bd=0,activebackground="#BE63D9")
                 panel_11.place(x=1155,y=25)
-    
+  
     # labels of learners in navigation frame------------------------------------------------------
                 learners=Label(frame_home,text="Learners",font=("Brush Script MT",28,'bold'),bg="#BE63D9",fg="#221C35")
                 learners.place(x=17,y=12)
-
+  
     # frame which is in white bg that is located where the button of software design,math and programming is-------
                 frameofhomepage=Frame(window,width=1300,height=1600,bg="white")
                 frameofhomepage.place(x=0,y=66)
@@ -370,13 +348,10 @@ class Login:
     # bind methods
                 Button3.bind('<Enter>',onbutton3)
                 Button3.bind('<Leave>',leavebutton3)
-    
 
     #frame of footer part------------------------------------------------------
                 frameofblack=Frame(window,width=1280,height=200,bg="black")
                 frameofblack.place(x=0,y=630)
-
-
 
     # label of footer parts----------------------------------------------------------------------
                 aboutus=Label(frameofblack,text="About Us",font=("Inter Normal",13,"bold"),bg="black",fg="white")
@@ -403,9 +378,7 @@ class Login:
                 followus=Label(frameofblack,text="Follow Us",font=("Calibri",15,"bold"),bg="black",fg="White")
                 followus.place(x=800,y=2)
 
-
-
-                # photos downwards the follow us part----------------------------------------------------------------
+# photos downwards the follow us part----------------------------------------------------------------
                 instaimage=PhotoImage(file="insta.png")
                 instaimage= instaimage.zoom(16) 
                 instaimage = instaimage.subsample(20)
@@ -430,46 +403,39 @@ class Login:
                 panel_10 = Label(frameofblack,image = timage,bg="black")
                 panel_10.place(x=865,y=35)
 
-
-    #new window when clicked in the images used part-------------------------------------------------------
-                def imagesused():
-                    window=Toplevel()
-                    window.geometry('1250x1000')
-                    window.title("Images Used")
+ #new window when clicked in the images used part-------------------------------------------------------
+                # def imagesused():
+                #     window=Toplevel()
+                #     window.geometry('1250x1000')
+                #     window.title("Images Used")
                 
-                    window.config(bg='white')
-                    window.focus_force()
-                    window.grab_set()
+                #     window.config(bg='white')
+                #     window.focus_force()
+                #     window.grab_set()
+
+                #     imageused1=PhotoImage(file="img.jpg")
                 
-                # button of images used in footer part-----------------------------------------------------------
-                def onbuttonimages(e):
-                    iused['bg']='gray'
-                def leavebuttonimages(e):
-                    iused['bg']="black"
-
-                iused=Button(frameofblack,text="Images Used",font=("Calibri",15,"bold"),bd=0,bg="black",fg="White",command=imagesused)
-                iused.place(x=1000,y=0)
-                iused.bind('<Enter>',onbuttonimages)
-                iused.bind('<Leave>',leavebuttonimages)
-
-
-                
+                #     panel_12 = Label(image = imageused1,bg="red")
+                #     panel_12.place(x=100,y=200)
                     
-            # yo eroor ayepaxi balla photo visible bhayoo---------------------------------------------------------
-                def onbutton(e):
-                        Button1['bg']='#E2C5ED'
-                def leavebutton(e):
-                        Button1['bg']="#BE63D9"
-                    
-                Button1=Button(frame_home,text="Subjects",font=('Inter Normal',20),bg='white',fg="black",bd=0,command=subject)
-                Button1.place(x=360,y=20)
+                # # button of images used in footer part-----------------------------------------------------------
+                # def onbuttonimages(e):
+                #     iused['bg']='gray'
+                # def leavebuttonimages(e):
+                #     iused['bg']="black"
 
-#login button of log in page
-    
+                # iused=Button(frameofblack,text="Images Used",font=("Calibri",15,"bold"),bd=0,bg="black",fg="White",command=imagesused)
+                # iused.place(x=1000,y=0)
+                # iused.bind('<Enter>',onbuttonimages)
+                # iused.bind('<Leave>',leavebuttonimages)
+
+                
+           
+# log in button of log in page
         log_in=Button(frame,width=9,pady=3,text="Log in",bg="#2586DA",fg="White",border=0,font=('Calibri',13),command=home_page)
         log_in.place(x=113,y=252)
 
-#signin button in log in page
+# sign up button in log in page
         sign_in=Button(frame,width=6,text='Sign up',border=0,bg='#F3EEE5',cursor='hand2',fg="Blue",font=("Calibri",15,'bold',UNDERLINE),command=signup)
         sign_in.place(x=125,y=323) 
 
@@ -481,8 +447,6 @@ window=mainloop()
     
 
     
-            
-
 
 
 
