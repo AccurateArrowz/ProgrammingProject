@@ -160,7 +160,7 @@ def insert_data():
 submit_button = Button(root, text="Submit", command=insert_data)
 submit_button.grid(row=10, column=3)
 
-
+# to view the database
 def query():
     # create a databases or connect to one
     conn = sqlite3.connect('user_detail.db')

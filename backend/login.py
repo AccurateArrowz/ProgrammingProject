@@ -19,7 +19,8 @@ def login():
             messagebox.showerror('Error', 'connection is not established try again')
             return
 
-        c.execute("SELECT * FROM users_details where username=? and password=?", (usernameEntry.get(), passwordEntry.get()))
+        c.execute("SELECT * FROM users_details where username=? and password=?",
+                  (usernameEntry.get(), passwordEntry.get()))
         record = c.fetchone()
         if record is None:
             messagebox.showerror('Error', 'invalid username or password')

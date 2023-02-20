@@ -2,20 +2,25 @@
 from tkinter import *
 from tkinter import messagebox ,ttk
 import sqlite3
-import datetime
 from PIL import ImageTk,Image
 import ast
+# window= Tk()
+# window.geometry('1250x1000')
+# window.title("Learners")
+# window.configure(bg='#E2C5ED')
+# window.minsize(width=900,height=600)   
+# window.maxsize(width=1600,height=1000)
+
 
 class Login:
     def __init__(self,window):
         self.window=window
+        
         self.window.geometry('1250x1000')
         self.window.title("Learners")
         self.window.configure(bg='#E2C5ED')
         self.window.minsize(width=900,height=600)   
         self.window.maxsize(width=1600,height=1000)
-        img=PhotoImage(file="icon.png")
-        self.window.iconphoto(False,img)
 
 
 
@@ -24,16 +29,19 @@ class Login:
         self.img = PhotoImage(file=self.imgpath)
         self.img = self.img.zoom(33) 
         self.img = self.img.subsample(32) 
-        Label(window,image=self.img,bg='#E2C5ED').place(x=18,y=95)
+        
+
+        Label(window,image=self.img,bg='#E2C5ED').place(x=10,y=55)
 
 
 # Main___Frame of log in page---------------------------------------------------------
         frame=Frame(self.window,width=320,height=390,bg='#F3EEE5')
-        frame.place(x=835,y=225)
+        frame.place(x=835,y=195)
+
 
 # label of log in page for learners title--------------------------------------------
-        heading=Label(text="Learners",fg="black",bg='#E2C5ED',font=("Brush Script MT",110,'bold'))
-        heading.place(x=460,y=-20)
+        heading=Label(text="Learners",fg="red",bg='#E2C5ED',font=("Brush Script MT",76,'bold'))
+        heading.place(x=500,y=-5)
 
 
         details=Label(frame,text="Your Hub for learning",font=("Calibiri",18,"bold"),bg='#F3EEE5',fg="black")
@@ -45,12 +53,17 @@ class Login:
         self.username_1=Entry(frame,bg="White",width=21,font=('Inter Normal',16),bd=0)
         self.username_1.place(x=30,y=120)
 
+
+
+
+
+
 # username_______icon------------------------------------------------------
         self.imgpath_1 = 'user (2).png'
         self.Username_image = PhotoImage(file=self.imgpath_1)
         
 
-        Label(window,image=self.Username_image,bg='#F3EEE5').place(x=950,y=305)
+        Label(window,image=self.Username_image,bg='#F3EEE5').place(x=950,y=275)
 
 # Password of log in page---------------------------------------------------
 
@@ -66,52 +79,65 @@ class Login:
 
         # password____icon-------------------------------------------------
         self.imgpath_2 = 'ABC.png'
-        self.password_image = PhotoImage(file=self.imgpath_2) 
-        Label(window,image=self.password_image,bg='#F3EEE5').place(x=952,y=385)
+        self.password_image = PhotoImage(file=self.imgpath_2)
+        self.password_image = self.password_image.zoom(30) 
+        self.password_image = self.password_image.subsample(32) 
+        
+
+        Label(window,image=self.password_image,bg='#F3EEE5').place(x=952,y=356)
 
         # eye icon-----------------------------------------------------------------------
-        self.show_image=PhotoImage(file='view.png')
-        self.show=Button(frame,image=self.show_image,bg="#F3EEE5",bd=0)
-        self.show.place(x=289,y=199)
+        show_image=PhotoImage(file='view.png')
+        show=Button(frame,image=show_image,bg="#F3EEE5",bd=0)
+        show.place(x=289,y=199)
 
-<<<<<<< HEAD
+        # def login_function(self):
+        #     if self.username_1.get()=="" or self.username_1.get()=="":
+        #         messagebox.showerror("Error","Fill the both fields",parent=self.window)
+        #     elif self.username_1.get()!="r" or self.username_1.get()!="1":
+        #         messagebox.showerror("Invalid username",parent=self.window)
+        #     else:
+        #         messagebox.showinfo("Welcome",f"Welcome {self.username_1.get()}\nYour Password: {self.username_1.get()}",parent=self.window)
 
 
-=======
-# label for username,pw empty in log in page
->>>>>>> 1ce3d5968eed29cf7764d4f0a7d874cce6b6941f
         errorLabel = Label(frame,text='',font=(8),fg='red')
         errorLabel.grid(row =4,column =0,padx=10,sticky='W')
         errorLabel.place(x=33,y=224)
 
+
+        errorLabel1 = Label(frame,text='',font=(8),fg='red')
+        errorLabel1.grid(row =4,column =0,padx=10,sticky='W')
+        errorLabel1.place(x=33,y=224)
+
+        
+
+  
 # next window for signup/register page--------------------------------------------------------
         def signup():
-
-<<<<<<< HEAD
 
                     
             
 
 
-=======
->>>>>>> 1ce3d5968eed29cf7764d4f0a7d874cce6b6941f
             window=Toplevel()
             window.title("Sign Up")
             window.maxsize(width=1290,height=1000)
             window.minsize(width=900,height=600)
             window.config(bg='#F3EEE5')
-            img=PhotoImage(file="icon.png")
-            window.iconphoto(False,img)
             window.focus_force()
             window.grab_set()
-           
+
+            
              # frame for register--------------------------------------------------------------------------
-            frame_2=Frame(window,width=500,height=578,bg='#E2C5ED')
-            frame_2.place(x=80,y=75)
-  
- # labels of register page frame--------------------------------------------------------------
+            frame_2=Frame(window,width=500,height=583,bg='#E2C5ED')
+            frame_2.place(x=80,y=68)
+
+    
+    # # labels of register page frame--------------------------------------------------------------
             text=Label(frame_2,text="CREATE YOUR ACCOUNT",fg='#4F1D63',bg='#E2C5ED',font=('Calibri',29,'bold'))
             text.place(x=40,y=35)
+
+            
 
     # labels and entry box for first name---------------------------------------------------------
             def on_enter_1(e):
@@ -129,7 +155,7 @@ class Login:
             user_1.bind("<FocusOut>",on_leave_1)
 
 
-   # labels and entry box for last name--------------------------------------------------
+#     # labels and entry box for last name--------------------------------------------------
             def on_enter_1(e):
                 x=user_2.get()
                 if x=='     Last Name':
@@ -145,19 +171,25 @@ class Login:
             user_2.bind("<FocusOut>",on_leave_1)
 
 
-     #gender--------------------------------------------------------
+# #     #gender--------------------------------------------------------
             gender=Label(frame_2,text="Gender",fg='black',bg='#E2C5ED',font=('Inter Normal',15))
             gender.place(x=75,y=200)
 
-            var=IntVar()
-            ca=Radiobutton(window,text=("Male"),bg='#E2C5ED',fg='Black',font=('Arial',14),variable=var)
-            ca.place(x=230,y=270)
-            var_1=IntVar()
-            ca_1=Radiobutton(window,text=("Female"),bg='#E2C5ED',fg='Black',font=('Arial',14),variable=var_1)
-            ca_1.place(x=299,y=270)
-            var_2=IntVar()
-            ca_2=Radiobutton(window,text=("Others"),bg='#E2C5ED',fg='Black',font=('Arial',14),variable=var_2)
-            ca_2.place(x=389,y=270)
+            gender = ['Male','Female','Others']
+            gender_var = StringVar()
+            gender_var.set('none')
+
+            gender_male_button=Radiobutton(window,text="Male",bg='#E2C5ED',fg='Black',font=('Arial',14), variable=gender_var, value="Male")
+            gender_male_button.place(x=230,y=265)
+
+            gender_female_button=Radiobutton(window,text="Female",bg='#E2C5ED',fg='Black',font=('Arial',14), variable=gender_var, value="Female")
+            gender_female_button.place(x=299,y=265)
+
+            gender_other_button=Radiobutton(window,text="Others",bg='#E2C5ED',fg='Black',font=('Arial',14), variable=gender_var, value="Others")
+            gender_other_button.place(x=389,y=265)
+
+        
+    
 
     # labels and entry box for date of birth---------------------------------
             def on_enter_1(e):
@@ -175,12 +207,11 @@ class Login:
             dob=Label(frame_2,text="Date of Birth",font=('Inter Normal',15),bg='#E2C5ED',fg="black")
             dob.place(x=75,y=237)
 
-# icon of date of birth
             DOBimage=PhotoImage(file='DOB.png')
             DOBimage= DOBimage.zoom(15) #with 250, I ended up running out of memory
             DOBimage = DOBimage.subsample(20)
             imageofdob=Label(window,image=DOBimage,bg='#E2C5ED')
-            imageofdob.place(x=272,y=313)
+            imageofdob.place(x=271,y=306)
     
             def on_enter_1(e):
                 user_4.delete(0,'end')
@@ -221,12 +252,19 @@ class Login:
             user_6.insert(0,'     Username')
             user_6.bind("<FocusIn>",on_enter_1)
             user_6.bind("<FocusOut>",on_leave_1)
+    
+            # userimage=PhotoImage(file='Group.png')
+            # userimage= userimage.zoom(16) #with 250, I ended up running out of memory
+            # userimage = userimage.subsample(20)
+            # imageofuser=Label(window,image=userimage,bg='white')
+            # imageofuser.place(x=150,y=432)
+
 
 #     # labels and entry box for Type(student,teacher)--------------------------------------
             hi=Label(frame_2,text="Type",width=15,bg="#E2C5ED",font=("Inter Normal",16))
             hi.place(x=10,y=316)
-            user7_var=StringVar(value='  Student')
-            user7_combobox=ttk.Combobox(frame_2,values=['Teacher','Student'],font=('Inter Normal',15),width=8, textvariable=user7_var)
+            user7_var=StringVar(value='  Select your type')
+            user7_combobox=ttk.Combobox(frame_2,values=['Teacher','Student'],font=('Inter Normal',15),width=15, textvariable=user7_var)
             user7_combobox.place(x=148,y=316)
     
 #     # labels and entry box for new password----------------------------------------------------
@@ -259,42 +297,43 @@ class Login:
             user_8.bind("<FocusIn>",on_enter_1)
             user_8.bind("<FocusOut>",on_leave_1)
 
-<<<<<<< HEAD
 
 
 
 
             def signup_function():
                 if (user_7.get()=='') or (user_8.get()==''):
-
                     messagebox.showerror("Error","This field is required",parent=window)
-                
+
+                elif user_1.get() == '' or user_2.get() == '' or user_3.get() == '' or user_4.get() == '' or user_5.get() == '' or user_6.get() == '' or user_7.get() == '' or user7_var.get()== '' or user_8.get() == '':
+                    messagebox.showerror('Error', 'All fields are required')
+
                 elif len(user_7.get())<6 or len(user_7.get())<6:
                     messagebox.showerror("Error","Password should contain at least 6 character",parent=window)
+
                 else:
                     messagebox.showinfo("Welcome",f"Welcome {user_7.get()}\nYour Password: {user_7.get()}",parent=window)
 
-                    conn = sqlite3.connect('user_detail.db')
+                    conn = sqlite3.connect('learners.db')
 
                     c = conn.cursor()
 
                     # Create table
-                    c.execute("""CREATE TABLE IF NOT EXISTS users_details(
-                            id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            first_name TEXT NOT NULL,
-                            last_name TEXT NOT NULL,
-                            gender TEXT NOT NULL,
-                            date_of_birth INTEGER NOT NULL,
-                            username TEXT NOT NULL,
-                            user_type TEXT NOT NULL,
-                            password TEXT NOT NULL,
-                            confirm_password TEXT NOT NULL
-                            )""")
+                    c.execute("""CREATE TABLE IF NOT EXISTS college_system(
+                                               id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                               first_name TEXT NOT NULL,
+                                               last_name TEXT NOT NULL,
+                                               gender TEXT NOT NULL,
+                                               date_of_birth INTEGER NOT NULL,
+                                               username TEXT NOT NULL,
+                                               user_type TEXT NOT NULL,
+                                               password TEXT NOT NULL,
+                                               confirm_password TEXT NOT NULL
+                                               )""")
                     print("Table created successfully")
 
                     conn.commit()
                     conn.close()
-
 
                     def insert_data():
                         # Extract the values entered by the user
@@ -314,7 +353,7 @@ class Login:
                             "first_name": first_name_value,
                             "last_name": last_name_value,
                             "gender": gender_value,
-                            "date_of_birth": [year,month, date],
+                            "date_of_birth": [year, month, date],
                             "user_type": user_type_value,
                             "username": username_value,
                             "password": password_value,
@@ -322,7 +361,7 @@ class Login:
                         }
 
                         c.execute(
-                            "INSERT INTO users_details (first_name, last_name, gender, date_of_birth, user_type, username, password, confirm_password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                            "INSERT INTO college_system (first_name, last_name, gender, date_of_birth, user_type, username, password, confirm_password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                             (data["first_name"], data["last_name"], data["gender"], data["date_of_birth"],
                              data["user_type"],
                              data["username"], data["password"], data["confirm_password"]))
@@ -338,13 +377,13 @@ class Login:
                         # to view the database
                         def query():
                             # create a databases or connect to one
-                            conn = sqlite3.connect('user_detail.db')
+                            conn = sqlite3.connect('learners.db')
 
                             # create cursor
                             c = conn.cursor()
 
                             # query of the database
-                            c.execute("SELECT *, oid FROM user_details")
+                            c.execute("SELECT *, oid FROM college_system")
 
                             records = c.fetchall()
                             print(records)
@@ -355,53 +394,48 @@ class Login:
                                 print_record += str(record[0]) + ' ' + str(record[1]) + ' ' + '\t' + str(
                                     record[8]) + '\n'
 
-                            query_label = Label(window, text=print_record)
-                            query_label.grid(row=13, column=0, columnspan=2)
-
                             conn.commit()
                             conn.close()
+
+
 
                         # create query button
                         query_btn = Button(window, text='Show Records', command=query)
                         query_btn.grid(row=11, column=2, columnspan=2, pady=10, padx=10, ipadx=100)
 
-
             button_register=Button(frame_2,pady=3,width=8,height=-9,border=0,text="Register",bg="#39339B",fg="White",font=("Inter Normal",16),command=signup_function)
             button_register.place(x=180,y=495)
-=======
-            button_register=Button(frame_2,pady=3,width=8,height=-9,border=0,text="Register",bg="#39339B",fg="White",font=("Inter Normal",16),command=window.destroy)
-            button_register.place(x=180,y=500)
->>>>>>> 1ce3d5968eed29cf7764d4f0a7d874cce6b6941f
 
             # Photo__Of__Signup__window-------------------------------------------------------------------
-            image_2=PhotoImage(file='Rectangle 6.png')
-            image_2=image_2.zoom(30) 
-            image_2=image_2.subsample(32)
-            why=Label(window,image=image_2,bg="#F3EEE5")
-            why.place(x=720,y=115)
+            # image_2=PhotoImage(file='Rectangle 6.png')
+            # image_2=image_2.zoom(30) 
+            # image_2=image_2.subsample(32)
+            # why=Label(window,image=image_2,bg="#F3EEE5")
+            # why.place(x=720,y=115)
+            # Label(window,image=image_2,command=signup)
             
- # window of main home page/dashboard-------------------------------------------------
+        
+
+# # window of main home page/dashboard-------------------------------------------------
         def home_page():
-                import sqlite3
+                conn= sqlite3.connect("learners.db")
+                c = conn.cursor
 
-                from tkinter import messagebox
-
-
-                if self.username_1.get()=='' and password_1.get()=='':
-                    errorLabel.config(text='Username and Password is empty!',bg="#F3EEE5",fg='Red',font=('calibri',13))
+                if self.username_1.get() == '' and password_1.get() == '':
+                    errorLabel.config(text='Username and Password is empty!', bg="#F3EEE5", fg='Red',
+                                      font=('calibri', 13))
                     return
-                elif self.username_1.get()=='':
+                elif self.username_1.get() == '':
                     errorLabel.config(text='Username is empty')
                     return
-                elif password_1.get()=='':
+                elif password_1.get() == '':
                     errorLabel.config(text='Password is empty')
                     return
-<<<<<<< HEAD
                 else:
-                    conn = sqlite3.connect('user_detail.db')
+                    conn = sqlite3.connect('learners.db')
                     c = conn.cursor()
 
-                    c.execute("SELECT * FROM users_details where username=? and password=?",
+                    c.execute("SELECT * FROM college_system where username=? and password=?",
                               (self.username_1.get(), password_1.get()))
                     record = c.fetchone()
 
@@ -413,39 +447,55 @@ class Login:
                     conn.commit()
                     conn.close()
 
-
                 
         
-=======
->>>>>>> 1ce3d5968eed29cf7764d4f0a7d874cce6b6941f
                
                 window=Toplevel()
                 window.title("Home Page")
                 window.geometry('1250x1000')
                 window.config(bg='white')
-                img=PhotoImage(file="icon.png")
-                self.window.iconphoto(False,img)
                 window.focus_force()
                 window.grab_set()
+
+                
+
+
 
     # navigation frame-------------------------------------------------------------
                 frame_home=Frame(window,width=1280,height=66,bg="#BE63D9")
                 frame_home.place(x=0,y=0)
 
+
     # profile image-----------------------------------------------------------------
-                circleimage=PhotoImage(file="profileuser.png")
-                panel_11= Button(frame_home,image = circleimage,bg="#BE63D9",bd=0,activebackground="#BE63D9")
-                panel_11.place(x=1155,y=25)
-  
+    #             circleimage=PhotoImage(file="circle.png")
+    #             circleimage= circleimage.zoom(20) #with 250, I ended up running out of memory
+    #             circleimage = circleimage.subsample(20)
+    # panel_11= Button(frame_home,image = circleimage,bg="#BE63D9",bd=0,activebackground="#BE63D9")
+    # panel_11.place(x=1140,y=15)
+
+    
+
+    # profileimage=PhotoImage(file="profile.png")
+#     # profileimage= profileimage.zoom(16) #with 250, I ended up running out of memory
+#     # profileimage = profileimage.subsample(23)
+#     # panel_11= Label(frame_home,image = profileimage,bg="white")
+#     # panel_11.place(x=1151,y=19)
+#     # profilelabel=Label(frame_home,text="Profile",font=("calibri",7,"bold"),bg="white",fg="black")
+#     # profilelabel.place(x=1150,y=40)
+    
     # labels of learners in navigation frame------------------------------------------------------
                 learners=Label(frame_home,text="Learners",font=("Brush Script MT",28,'bold'),bg="#BE63D9",fg="#221C35")
                 learners.place(x=17,y=12)
-  
+
+    
     # frame which is in white bg that is located where the button of software design,math and programming is-------
                 frameofhomepage=Frame(window,width=1300,height=1600,bg="white")
                 frameofhomepage.place(x=0,y=66)
 
-    # button of mathematics-------------------------------------------------------------------
+    
+    
+
+#     # button of mathematics-------------------------------------------------------------------
                 math_img=PhotoImage(file="MathsCard.png")
                 math_img.image=math_img
                 math_img_lbl=Button(frameofhomepage,bg="white",image=math_img,bd=0,activebackground="white",borderwidth=0)
@@ -462,6 +512,16 @@ class Login:
                 software_img.image=software_img
                 software_img=Button(frameofhomepage,bg="white",image=software_img,bd=0,activebackground="white",borderwidth=0)
                 software_img.place(x=820,y=70)
+        
+
+    # def login_function(self):
+    #     if self.username_1.get()=="" or self.username_1.get()=="":
+    #         messagebox.showerror("Error","Fill the both fields",parent=self.window)
+    #     elif self.username_1.get()!="r" or self.username_1.get()!="1":
+    #         messagebox.showerror("Invalid username",parent=self.window)
+    #     else:
+    #         messagebox.showinfo("Welcome",f"Welcome {self.username_1.get()}\nYour Password: {self.username_1.get()}",parent=self.window)
+
 
  # button of subjects in navigation part------------------------------------------------------
                 def onbutton1(e):
@@ -500,10 +560,13 @@ class Login:
     # bind methods
                 Button3.bind('<Enter>',onbutton3)
                 Button3.bind('<Leave>',leavebutton3)
+    
 
     #frame of footer part------------------------------------------------------
                 frameofblack=Frame(window,width=1280,height=200,bg="black")
                 frameofblack.place(x=0,y=630)
+
+
 
     # label of footer parts----------------------------------------------------------------------
                 aboutus=Label(frameofblack,text="About Us",font=("Inter Normal",13,"bold"),bg="black",fg="white")
@@ -530,7 +593,9 @@ class Login:
                 followus=Label(frameofblack,text="Follow Us",font=("Calibri",15,"bold"),bg="black",fg="White")
                 followus.place(x=800,y=2)
 
-# photos downwards the follow us part----------------------------------------------------------------
+
+
+                # photos downwards the follow us part----------------------------------------------------------------
                 instaimage=PhotoImage(file="insta.png")
                 instaimage= instaimage.zoom(16) 
                 instaimage = instaimage.subsample(20)
@@ -555,39 +620,56 @@ class Login:
                 panel_10 = Label(frameofblack,image = timage,bg="black")
                 panel_10.place(x=865,y=35)
 
- #new window when clicked in the images used part-------------------------------------------------------
-                # def imagesused():
-                #     window=Toplevel()
-                #     window.geometry('1250x1000')
-                #     window.title("Images Used")
-                
-                #     window.config(bg='white')
-                #     window.focus_force()
-                #     window.grab_set()
 
-                #     imageused1=PhotoImage(file="img.jpg")
+    #new window when clicked in the images used part-------------------------------------------------------
+                def imagesused():
+                    window=Toplevel()
+                    window.geometry('1250x1000')
+                    window.title("Images Used")
                 
-                #     panel_12 = Label(image = imageused1,bg="red")
-                #     panel_12.place(x=100,y=200)
+                    window.config(bg='white')
+                    window.focus_force()
+                    window.grab_set()
+                
+                # button of images used in footer part-----------------------------------------------------------
+                def onbuttonimages(e):
+                    iused['bg']='gray'
+                def leavebuttonimages(e):
+                    iused['bg']="black"
+
+                iused=Button(frameofblack,text="Images Used",font=("Calibri",15,"bold"),bd=0,bg="black",fg="White",command=imagesused)
+                iused.place(x=1000,y=0)
+                iused.bind('<Enter>',onbuttonimages)
+                iused.bind('<Leave>',leavebuttonimages)
+
+
+                
                     
-                # # button of images used in footer part-----------------------------------------------------------
-                # def onbuttonimages(e):
-                #     iused['bg']='gray'
-                # def leavebuttonimages(e):
-                #     iused['bg']="black"
-
-                # iused=Button(frameofblack,text="Images Used",font=("Calibri",15,"bold"),bd=0,bg="black",fg="White",command=imagesused)
-                # iused.place(x=1000,y=0)
-                # iused.bind('<Enter>',onbuttonimages)
-                # iused.bind('<Leave>',leavebuttonimages)
-
                 
-           
-# log in button of log in page
+
+            # yo eroor ayepaxi balla photo visible bhayoo---------------------------------------------------------
+                def onbutton(e):
+                        Button1['bg']='#E2C5ED'
+                def leavebutton(e):
+                        Button1['bg']="#BE63D9"
+                    
+                Button1=Button(frame_home,text="Subjects",font=('Inter Normal',20),bg='white',fg="black",bd=0,command=subject)
+                Button1.place(x=360,y=20)
+
+            
+
+        
+
+    
+    
         log_in=Button(frame,width=9,pady=3,text="Log in",bg="#2586DA",fg="White",border=0,font=('Calibri',13),command=home_page)
+        
+        
         log_in.place(x=113,y=252)
 
-# sign up button in log in page
+        
+
+
         sign_in=Button(frame,width=6,text='Sign up',border=0,bg='#F3EEE5',cursor='hand2',fg="Blue",font=("Calibri",15,'bold',UNDERLINE),command=signup)
         sign_in.place(x=125,y=323) 
 
@@ -598,7 +680,6 @@ window=mainloop()
         
     
 
-<<<<<<< HEAD
     # def login_function(self):
     #     if self.username_1.get()=="" or self.username_1.get()=="":
     #         messagebox.showerror("Error","Fill the both fields",parent=self.window)
@@ -606,12 +687,6 @@ window=mainloop()
     #         messagebox.showerror("Invalid username",parent=self.window)
     #     else:
     #         messagebox.showinfo("Welcome",f"Welcome {self.username_1.get()}\nYour Password: {self.username_1.get()}",parent=self.window)
-=======
-    
-
->>>>>>> 1ce3d5968eed29cf7764d4f0a7d874cce6b6941f
-
-
 
 
 
