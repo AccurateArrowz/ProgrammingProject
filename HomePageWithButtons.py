@@ -1,6 +1,8 @@
 
 from tkinter import *
 from tkinter import messagebox ,ttk
+import sqlite3
+import datetime
 from PIL import ImageTk,Image
 import ast
 # window= Tk()
@@ -99,6 +101,8 @@ class Login:
         #         messagebox.showinfo("Welcome",f"Welcome {self.username_1.get()}\nYour Password: {self.username_1.get()}",parent=self.window)
 
 
+
+
         errorLabel = Label(frame,text='',font=(8),fg='red')
         errorLabel.grid(row =4,column =0,padx=10,sticky='W')
         errorLabel.place(x=33,y=224)
@@ -113,6 +117,7 @@ class Login:
   
 # next window for signup/register page--------------------------------------------------------
         def signup():
+
 
                     
             
@@ -297,15 +302,107 @@ class Login:
 
 
 
-            # def signup_function():
-            #     if (user_7.get()=='') or (user_8.get()==''):
+            def signup_function():
+                if (user_7.get()=='') or (user_8.get()==''):
 
-            #         messagebox.showerror("Error","This field is required",parent=window)
+                    messagebox.showerror("Error","This field is required",parent=window)
                 
-            #     elif user_7.get()<6 or user_7.get()<6:
-            #         messagebox.showerror("Error","Password should contain at least 6 character",parent=window)
-            #     else:
-            #         messagebox.showinfo("Welcome",f"Welcome {user_7.get()}\nYour Password: {user_7.get()}",parent=window)
+                elif len(user_7.get())<6 or len(user_7.get())<6:
+                    messagebox.showerror("Error","Password should contain at least 6 character",parent=window)
+                else:
+                    messagebox.showinfo("Welcome",f"Welcome {user_7.get()}\nYour Password: {user_7.get()}",parent=window)
+
+                    conn = sqlite3.connect('user_detail.db')
+
+                    c = conn.cursor()
+
+                    # Create table
+                    c.execute("""CREATE TABLE IF NOT EXISTS users_details(
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            first_name TEXT NOT NULL,
+                            last_name TEXT NOT NULL,
+                            gender TEXT NOT NULL,
+                            date_of_birth INTEGER NOT NULL,
+                            username TEXT NOT NULL,
+                            user_type TEXT NOT NULL,
+                            password TEXT NOT NULL,
+                            confirm_password TEXT NOT NULL
+                            )""")
+                    print("Table created successfully")
+
+                    conn.commit()
+                    conn.close()
+
+
+                    def insert_data():
+                        # Extract the values entered by the user
+                        first_name_value = user_1.get()
+                        last_name_value = user_2.get()
+                        gender_value = var.get()
+                        year = user_3.get()
+                        month = user_4.get()
+                        date = user_5.get()
+                        user_type_value = user7_var.get()
+                        username_value = user_7.get()
+                        password_value = user_8.get()
+                        confirm_password_value = user_8.get()
+
+                        # Store the values in a dictionary
+                        data = {
+                            "first_name": first_name_value,
+                            "last_name": last_name_value,
+                            "gender": gender_value,
+                            "date_of_birth": [year,month, date],
+                            "user_type": user_type_value,
+                            "username": username_value,
+                            "password": password_value,
+                            "confirm_password": confirm_password_value
+                        }
+
+                        c.execute(
+                            "INSERT INTO users_details (first_name, last_name, gender, date_of_birth, user_type, username, password, confirm_password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                            (data["first_name"], data["last_name"], data["gender"], data["date_of_birth"],
+                             data["user_type"],
+                             data["username"], data["password"], data["confirm_password"]))
+                        conn.commit()
+                        conn.close()
+
+                        # Show a success message
+                        messagebox.showinfo("Success", "Data inserted successfully")
+
+                        submit_button = Button(frame_2, text="Submit", command=insert_data)
+                        submit_button.grid(row=10, column=3)
+
+                        # to view the database
+                        def query():
+                            # create a databases or connect to one
+                            conn = sqlite3.connect('user_detail.db')
+
+                            # create cursor
+                            c = conn.cursor()
+
+                            # query of the database
+                            c.execute("SELECT *, oid FROM user_details")
+
+                            records = c.fetchall()
+                            print(records)
+
+                            # loop through the results
+                            print_record = ''
+                            for record in records:
+                                print_record += str(record[0]) + ' ' + str(record[1]) + ' ' + '\t' + str(
+                                    record[8]) + '\n'
+
+                            query_label = Label(window, text=print_record)
+                            query_label.grid(row=13, column=0, columnspan=2)
+
+                            conn.commit()
+                            conn.close()
+
+                        # create query button
+                        query_btn = Button(window, text='Show Records', command=query)
+                        query_btn.grid(row=11, column=2, columnspan=2, pady=10, padx=10, ipadx=100)
+
 
             button_register=Button(frame_2,pady=3,width=8,height=-9,border=0,text="Register",bg="#39339B",fg="White",font=("Inter Normal",16),command=signup_function)
             button_register.place(x=180,y=495)
@@ -322,6 +419,10 @@ class Login:
 
 # # window of main home page/dashboard-------------------------------------------------
         def home_page():
+                import sqlite3
+
+                from tkinter import messagebox
+
 
                 if self.username_1.get()=='' and password_1.get()=='':
                     errorLabel.config(text='Username and Password is empty!',bg="#F3EEE5",fg='Red',font=('calibri',13))
@@ -332,6 +433,22 @@ class Login:
                 elif password_1.get()=='':
                     errorLabel.config(text='Password is empty')
                     return
+                else:
+                    conn = sqlite3.connect('user_detail.db')
+                    c = conn.cursor()
+
+                    c.execute("SELECT * FROM users_details where username=? and password=?",
+                              (self.username_1.get(), password_1.get()))
+                    record = c.fetchone()
+
+                    if record is None:
+                        messagebox.showerror('Error', 'invalid username or password')
+                    else:
+                        messagebox.showinfo('Success', 'login is successful')
+
+                    conn.commit()
+                    conn.close()
+
 
                 
         
@@ -573,9 +690,6 @@ window=mainloop()
     #         messagebox.showerror("Invalid username",parent=self.window)
     #     else:
     #         messagebox.showinfo("Welcome",f"Welcome {self.username_1.get()}\nYour Password: {self.username_1.get()}",parent=self.window)
-            
-
-
 
 
 

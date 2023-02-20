@@ -118,4 +118,32 @@ confirm_password_Entry.grid(row=8, column=1)
 update_button = Button(root, text="Update Record", command=update_record)
 update_button.grid(row=9, column=0, columnspan=2, pady=10)
 
+def query():
+    # create a databases or connect to one
+    conn = sqlite3.connect('user_detail.db')
+
+    # create cursor
+    c = conn.cursor()
+
+    # query of the database
+    c.execute("SELECT *, oid FROM users_details")
+
+    records = c.fetchall()
+    print(records)
+
+    # loop through the results
+    print_record = ''
+    for record in records:
+        print_record += str(record[0]) + ' ' + str(record[1]) + ' ' + '\t' + str(record[8]) + '\n'
+
+    query_label = Label(root, text=print_record)
+    query_label.grid(row=13, column=0, columnspan=2)
+
+    conn.commit()
+    conn.close()
+
+# create query button
+query_btn = Button(root, text='Show Records', command=query)
+query_btn.grid(row=11, column=1, columnspan=2, pady=10, padx=10, ipadx=100)
+
 root.mainloop()
