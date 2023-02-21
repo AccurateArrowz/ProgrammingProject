@@ -25,7 +25,7 @@ class Login:
 
 
 # photo of log in page-----------------------------------------------
-        self.imgpath = 'Rectangle 1.png'
+        self.imgpath = 'C:/gittt/learners/Rectangle 1.png'
         self.img = PhotoImage(file=self.imgpath)
         self.img = self.img.zoom(33) 
         self.img = self.img.subsample(32) 
@@ -59,7 +59,7 @@ class Login:
 
 
 # username_______icon------------------------------------------------------
-        self.imgpath_1 = 'user (2).png'
+        self.imgpath_1 = 'C:/gittt/learners/user (2).png'
         self.Username_image = PhotoImage(file=self.imgpath_1)
         
 
@@ -78,7 +78,7 @@ class Login:
 
 
         # password____icon-------------------------------------------------
-        self.imgpath_2 = 'ABC.png'
+        self.imgpath_2 = 'C:/gittt/learners/ABC.png'
         self.password_image = PhotoImage(file=self.imgpath_2)
         self.password_image = self.password_image.zoom(30) 
         self.password_image = self.password_image.subsample(32) 
@@ -87,7 +87,7 @@ class Login:
         Label(window,image=self.password_image,bg='#F3EEE5').place(x=952,y=356)
 
         # eye icon-----------------------------------------------------------------------
-        show_image=PhotoImage(file='view.png')
+        show_image=PhotoImage(file='C:/gittt/learners/view.png')
         show=Button(frame,image=show_image,bg="#F3EEE5",bd=0)
         show.place(x=289,y=199)
 
@@ -207,7 +207,7 @@ class Login:
             dob=Label(frame_2,text="Date of Birth",font=('Inter Normal',15),bg='#E2C5ED',fg="black")
             dob.place(x=75,y=237)
 
-            DOBimage=PhotoImage(file='DOB.png')
+            DOBimage=PhotoImage(file='C:/gittt/learners/DOB.png')
             DOBimage= DOBimage.zoom(15) #with 250, I ended up running out of memory
             DOBimage = DOBimage.subsample(20)
             imageofdob=Label(window,image=DOBimage,bg='#E2C5ED')
