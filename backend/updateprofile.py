@@ -4,6 +4,56 @@ from tkinter import messagebox
 import datetime
 
 root = Tk()
+root.geometry('600x600')
+# Create a function to retrieve data from the database and display it in the frontend
+def display_data(user_id):
+    # Connect to the database
+    conn = sqlite3.connect('user_detail.db')
+    # Create a cursor object to execute SQL commands
+    c = conn.cursor()
+    # Execute a SELECT statement to retrieve data from the database for the specified user ID
+    c.execute('SELECT * FROM users_details WHERE id=?', (user_id,))
+    # Fetch the row returned by the SELECT statement
+    row = c.fetchone()
+    # Create a listbox to display the data
+    listbox = Listbox(root)
+    # Insert the row into the listbox
+    listbox.insert(END, row)
+    # Pack the listbox into the Tkinter window
+    listbox.pack()
+
+# Call the function to display the data for user with ID 1 when the Tkinter window is opened
+display_data(1)
+
+# Run the Tkinter event loop
+root.mainloop()
+
+
+def query():
+    # create a databases or connect to one
+    conn = sqlite3.connect('user_detail.db')
+
+    # create cursor
+    c = conn.cursor()
+
+    # query of the database
+    c.execute("SELECT *, oid FROM users_details")
+
+    records = c.fetchall()
+    print(records)
+
+    # loop through the results
+    print_record = ''
+    for record in records:
+        print_record += str(record[0]) + ' ' + str(record[1]) + ' ' + '\t' + str(record[8]) + '\n'
+
+    query_label = Label(root, text=print_record)
+    query_label.grid(row=13, column=0, columnspan=2)
+
+    conn.commit()
+    conn.close()
+
+root = Tk()
 root.title("Update Record")
 root.geometry("600x600")
 

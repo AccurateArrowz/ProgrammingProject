@@ -147,20 +147,21 @@ def insert_data():
     # Insert the data into the database
     conn = sqlite3.connect('user_detail.db')
     c = conn.cursor()
-    c.execute(
-        "INSERT INTO users_details (first_name, last_name, gender, date_of_birth, user_type, username, password, confirm_password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-        (data["first_name"], data["last_name"], data["gender"], data["date_of_birth"], data["user_type"],
-         data["username"], data["password"], data["confirm_password"]))
-    conn.commit()
-    conn.close()
+    query = f"INSERT INTO users_details (first_name, last_name, gender, date_of_birth, user_type, username, password, confirm_password) VALUES('{first_name_value}','{last_name_value}', '{gender_value}', '{dob_value}','{user_type_value}','{username_value}','{password_value}','{confirm_password_value}')"
+    print(query)
 
-    # Show a success message
-    messagebox.showinfo("Success", "Data inserted successfully")
+    try:
+        c.execute(query)
+        conn.commit()
+        print("Data added successfully")
+    except Exception as e:
+        print(f"Error:{str(e)}")
+        conn.rollback()
 
 submit_button = Button(root, text="Submit", command=insert_data)
 submit_button.grid(row=10, column=3)
 
-# to view the database
+    # to view the database
 def query():
     # create a databases or connect to one
     conn = sqlite3.connect('user_detail.db')
@@ -188,4 +189,5 @@ def query():
 # create query button
 query_btn = Button(root, text='Show Records', command=query)
 query_btn.grid(row=11, column=2, columnspan=2, pady=10, padx=10, ipadx=100)
+
 root.mainloop()
