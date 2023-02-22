@@ -3,6 +3,9 @@ from tkinter import *
 from tkinter import messagebox ,ttk
 import sqlite3
 from PIL import ImageTk,Image
+from subprocess import call
+
+
 import ast
 # window= Tk()
 # window.geometry('1250x1000')
@@ -14,203 +17,6 @@ import ast
 pswdButtonClicked=0
 confirmPswdButtonClicked=0
 
-
-def homePage():
-    window = Toplevel()
-    window.title("Home Page")
-    window.geometry('1250x1000')
-    window.config(bg='white')
-    window.focus_force()
-    window.grab_set()
-
-    # navigation frame-------------------------------------------------------------
-    frame_home = Frame(window, width=1280, height=66, bg="#BE63D9")
-    frame_home.place(x=0, y=0)
-
-    # profile image-----------------------------------------------------------------
-    #             circleimage=PhotoImage(file="circle.png")
-    #             circleimage= circleimage.zoom(20) #with 250, I ended up running out of memory
-    #             circleimage = circleimage.subsample(20)
-    # panel_11= Button(frame_home,image = circleimage,bg="#BE63D9",bd=0,activebackground="#BE63D9")
-    # panel_11.place(x=1140,y=15)
-
-    # profileimage=PhotoImage(file="profile.png")
-    #     # profileimage= profileimage.zoom(16) #with 250, I ended up running out of memory
-    #     # profileimage = profileimage.subsample(23)
-    #     # panel_11= Label(frame_home,image = profileimage,bg="white")
-    #     # panel_11.place(x=1151,y=19)
-    #     # profilelabel=Label(frame_home,text="Profile",font=("calibri",7,"bold"),bg="white",fg="black")
-    #     # profilelabel.place(x=1150,y=40)
-
-    # labels of learners in navigation frame------------------------------------------------------
-    learners = Label(frame_home, text="Learners", font=("Brush Script MT", 28, 'bold'), bg="#BE63D9",
-                     fg="#221C35")
-    learners.place(x=17, y=12)
-
-    # frame which is in white bg that is located where the button of software design,math and programming is-------
-    frameofhomepage = Frame(window, width=1300, height=1600, bg="white")
-    frameofhomepage.place(x=0, y=66)
-
-    #     # button of mathematics-------------------------------------------------------------------
-    math_img = PhotoImage(file="MathsCard.png")
-    math_img.image = math_img
-    math_img_lbl = Button(frameofhomepage, bg="white", image=math_img, bd=0, activebackground="white",
-                          borderwidth=0)
-    math_img_lbl.place(x=90, y=70)
-
-    # button of programming---------------------------------------------------------------
-    prog_img = PhotoImage(file="Programmingcard.png")
-    prog_img.image = prog_img
-    prog_img = Button(frameofhomepage, bg="white", image=prog_img, bd=0, activebackground="white",
-                      borderwidth=0)
-    prog_img.place(x=467, y=70)
-
-    # button of software design----------------------------------------------------
-    software_img = PhotoImage(file="SoftwareDesignCard.png")
-    software_img.image = software_img
-    software_img = Button(frameofhomepage, bg="white", image=software_img, bd=0, activebackground="white",
-                          borderwidth=0)
-    software_img.place(x=820, y=70)
-
-    # def login_function(self):
-    #     if self.username_1.get()=="" or self.username_1.get()=="":
-    #         messagebox.showerror("Error","Fill the both fields",parent=self.window)
-    #     elif self.username_1.get()!="r" or self.username_1.get()!="1":
-    #         messagebox.showerror("Invalid username",parent=self.window)
-    #     else:
-    #         messagebox.showinfo("Welcome",f"Welcome {self.username_1.get()}\nYour Password: {self.username_1.get()}",parent=self.window)
-
-    # button of subjects in navigation part------------------------------------------------------
-    def onbutton1(e):
-        subj['bg'] = '#E2C5ED'
-
-    def leavebutton1(e):
-        subj['bg'] = "#BE63D9"
-
-    subj = Button(frame_home, text="Subjects", font=('Inter Normal', 20), bd=0, bg='#BE63D9', fg="black")
-    subj.place(x=360, y=20)
-
-    # bind methods
-    subj.bind('<Enter>', onbutton1)
-    subj.bind('<Leave>', leavebutton1)
-
-    # button of ticketss in navigation part------------------------------------------------------
-    def onbutton3(e):
-        Button2['bg'] = '#E2C5ED'
-
-    def leavebutton3(e):
-        Button2['bg'] = "#BE63D9"
-
-    Button2 = Button(frame_home, text="Tickets", font=('Inter Normal', 20), bg="#BE63D9", fg="black", bd=0)
-    Button2.place(x=627, y=20)
-
-    # bind methods
-    Button2.bind('<Enter>', onbutton3)
-    Button2.bind('<Leave>', leavebutton3)
-
-    # button of notices in navigation part------------------------------------------------------
-    def onbutton3(e):
-        Button3['bg'] = '#E2C5ED'
-
-    def leavebutton3(e):
-        Button3['bg'] = "#BE63D9"
-
-    Button3 = Button(frame_home, text="Notices", font=('Inter Normal', 20), bg="#BE63D9", fg="black", bd=0)
-    Button3.place(x=905, y=20)
-
-    # bind methods
-    Button3.bind('<Enter>', onbutton3)
-    Button3.bind('<Leave>', leavebutton3)
-
-    # frame of footer part------------------------------------------------------
-    frameofblack = Frame(window, width=1280, height=200, bg="#1D1D1D")
-    frameofblack.place(x=0, y=630)
-
-    # label of footer parts----------------------------------------------------------------------
-    aboutus = Label(frameofblack, text="About Us", font=("Inter Normal", 15, "bold"), bg="#1D1D1D", fg="white")
-    aboutus.place(x=100, y=2)
-
-    y = Label(frameofblack, text="We are dedicated to making the students", font=("Calibri", 11), bg="#1D1D1D",
-              fg="white")
-    y.place(x=100, y=25)
-
-    y1 = Label(frameofblack, text="learn various subjects and topics", font=("Calibri", 11), bg="#1D1D1D",
-               fg="white")
-    y1.place(x=100, y=45)
-
-    y2 = Label(frameofblack, text="in an easy and fun way", font=("Calibri", 11), bg="#1D1D1D", fg="white")
-    y2.place(x=100, y=65)
-
-    contactus = Label(frameofblack, text="Contact Us", font=("Calibri", 15, "bold"), bg="#1D1D1D", fg="White")
-    contactus.place(x=550, y=2)
-
-    email = Label(frameofblack, text="learners@gmail.com", font=("Calibri", 11), bg="#1D1D1D", fg="White")
-    email.place(x=550, y=27)
-
-    phonenumber = Label(frameofblack, text="0012653/0127358", font=("Calibri", 11), bg="#1D1D1D", fg="White")
-    phonenumber.place(x=550, y=50)
-
-    followus = Label(frameofblack, text="Follow Us", font=("Calibri", 15, "bold"), bg="#1D1D1D", fg="White")
-    followus.place(x=800, y=2)
-
-    # photos downwards the follow us part----------------------------------------------------------------
-    instaimage = PhotoImage(file="insta.png")
-    instaimage = instaimage.zoom(16)
-    instaimage = instaimage.subsample(20)
-    panel_7 = Label(frameofblack, image=instaimage, bg="#1D1D1D")
-    panel_7.place(x=805, y=35)
-
-    fbimage = PhotoImage(file="facebook.png")
-    fbimage = fbimage.zoom(16)
-    fbimage = fbimage.subsample(20)
-    panel_8 = Label(frameofblack, image=fbimage, bg="#1D1D1D")
-    panel_8.place(x=825, y=35)
-
-    limage = PhotoImage(file="linkedin.png")
-    limage = limage.zoom(16)
-    limage = limage.subsample(20)
-    panel_9 = Label(frameofblack, image=limage, bg="#1D1D1D")
-    panel_9.place(x=845, y=35)
-
-    timage = PhotoImage(file="twitter.png")
-    timage = timage.zoom(16)
-    timage = timage.subsample(20)
-    panel_10 = Label(frameofblack, image=timage, bg="#1D1D1D")
-    panel_10.place(x=865, y=35)
-
-    # new window when clicked in the images used part-------------------------------------------------------
-    def imagesused():
-        window = Toplevel()
-        window.geometry('1250x1000')
-        window.title("Images Used")
-
-        window.config(bg='white')
-        window.focus_force()
-        window.grab_set()
-
-    # button of images used in footer part-----------------------------------------------------------
-    def onbuttonimages(e):
-        iused['bg'] = 'gray'
-
-    def leavebuttonimages(e):
-        iused['bg'] = "black"
-
-    iused = Button(frameofblack, text="Images Used", font=("Calibri", 15, "bold"), bd=0, bg="#1D1D1D", fg="White",
-                   command=imagesused)
-    iused.place(x=1000, y=0)
-    iused.bind('<Enter>', onbuttonimages)
-    iused.bind('<Leave>', leavebuttonimages)
-
-    # yo eroor ayepaxi balla photo visible bhayoo---------------------------------------------------------
-    def onbutton(e):
-        Button1['bg'] = '#E2C5ED'
-
-    def leavebutton(e):
-        Button1['bg'] = "#BE63D9"
-
-    Button1 = Button(frame_home, text="Subjects", font=('Inter Normal', 20), bg='white', fg="black", bd=0,
-                     command=subject)
-    Button1.place(x=360, y=20)
 
 
 class Login:
@@ -637,7 +443,8 @@ class Login:
             self.why = Label(window, image=self.image_2, bg="#F3EEE5")
             self.why.place(x=720, y=115)
 
-        
+
+        # def runOtherFile():
 
         def login_authentication():
                 conn= sqlite3.connect("learners.db")
@@ -664,8 +471,10 @@ class Login:
                     if record is None:
                         messagebox.showerror('Error', 'invalid username or password')
                     else:
-                        homePage() #home page will be created if record exists
-                        self.loginWindow.destroy()
+                        loginWindow.destroy()
+                        call(["python3", "HomeWindow.py"])
+                        #home page will be created if record exists
+
                     conn.commit()
                     conn.close()
 
