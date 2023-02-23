@@ -76,7 +76,7 @@ class Login:
 
         password=Label(frame,text="Password",font=("Inter Normal",16),bg='#F3EEE5',fg="black")
         password.place(x=25,y=160)
-        password_1=Entry(frame,bg="White",width=21,font=('Inter Normal',16),bd=0,fg='black')
+        password_1=Entry(frame,bg="White",width=21,font=('Inter Normal',16),bd=0,fg='black',show='*')
         password_1.place(x=30,y=199)
 
         # labels of don't have an account in log in page frame-----------------------------------------------
@@ -320,10 +320,10 @@ class Login:
                 global confirmPswdButtonClicked
                 confirmPswdButtonClicked += 1
                 if confirmPswdButtonClicked % 2 != 0:
-                    passwordHideButton.config(text='H')
+                    confirmPasswordHideButton.config(text='H')
                     user_8.config(show='')
                 elif confirmPswdButtonClicked % 2 == 0:
-                    passwordHideButton.config(text='S')
+                    confirmPasswordHideButton.config(text='S')
                     user_8.config(show='*')
 
             passwordHideButton= Button(frame_2,text='S',command=showPswd)
@@ -471,6 +471,10 @@ class Login:
                     if record is None:
                         messagebox.showerror('Error', 'invalid username or password')
                     else:
+                        global currentUser
+                        currentUser =self.username_1.get()
+                        print(currentUser)
+
                         loginWindow.destroy()
                         call(["python3", "HomeWindow.py"])
                         #home page will be created if record exists
@@ -497,10 +501,10 @@ class Login:
         sign_in=Button(frame,width=6,text='Sign up',border=0,bg='#F3EEE5',cursor='hand2',fg="Blue",font=("Calibri",15,'bold',UNDERLINE),command=signup)
         sign_in.place(x=115,y=323)
 
-        
-loginWindow=Tk()
-obj=Login(loginWindow)
-loginWindow=mainloop()
+if __name__=='__main__' :
+    loginWindow=Tk()
+    obj=Login(loginWindow)
+    loginWindow=mainloop()
         
     
 

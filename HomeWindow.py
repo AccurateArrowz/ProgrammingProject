@@ -4,7 +4,14 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 import datetime
 from PIL import ImageTk,Image
+import sqlite3
+# from LoginWindow import
 
+currentUser = 'Prabin Tiwari'
+currentUser_type ='student'
+#
+# currentUser = 'Hari Kumar'
+# currentUser_type='teacher'
 
 def lineBreaker(text):
     words = 0
@@ -18,12 +25,109 @@ def lineBreaker(text):
     # print(refactoredText)
     return refactoredText
 
+
+
+def editProfile():
+    #creating the window
+    root = Tk()
+    root.geometry('600x600')
+    root.title("Update CRUD")
+
+    label1 = Label(root, text="Edit your details",font=('x',27))
+    label1.grid(row=0, column=0,columnspan=2,pady=20)
+
+    # Add labels and entry widgets to update record
+    record_id_label = Label(root, width=30, text="Record ID:")
+    record_id_label.grid(row=1, column=0)
+
+    record_id_entry = Entry(root, width=30,)
+    record_id_entry.grid(row=1, column=1)
+
+    first_name_label = Label(root, text="First Name:")
+    first_name_label.grid(row=2, column=0)
+
+    first_name_entry = Entry(root, width=30)
+    first_name_entry.grid(row=2, column=1)
+
+    last_name_label = Label(root, text="Last Name:")
+    last_name_label.grid(row=3, column=0)
+
+    last_name_entry = Entry(root, width=30)
+    last_name_entry.grid(row=3, column=1)
+
+    gender_label = Label(root, text="Gender:")
+    gender_label.grid(row=4, column=0)
+
+    gender_entry = Entry(root, width=30)
+    gender_entry.grid(row=4, column=1)
+
+    dob_label = Label(root, text="Date of Birth: 'YYYY-MM-DD' ")
+    dob_label.grid(row=5, column=0)
+
+    dob_Entry = Entry(root, width=30)
+    dob_Entry.grid(row=5, column=1)
+
+    user_type_label = Label(root, text="User Type:")
+    user_type_label.grid(row=6, column=0)
+
+    user_type_entry = Entry(root, width=30)
+    user_type_entry.grid(row=6, column=1)
+
+    username_label = Label(root, text="username:")
+    username_label.grid(row=7, column=0)
+
+    username_Entry = Entry(root, width=30)
+    username_Entry.grid(row=7, column=1)
+
+    password_label = Label(root, text="Password:")
+    password_label.grid(row=8, column=0)
+
+    password_Entry = Entry(root, width=30, show='*')
+    password_Entry.grid(row=8, column=1)
+
+    confirm_password_label = Label(root, text="Confirm_Password:")
+    confirm_password_label.grid(row=9, column=0)
+
+    confirm_password_Entry = Entry(root, width=30, show='*')
+    confirm_password_Entry.grid(row=9, column=1)
+
+    # create a connection to the database
+    conn = sqlite3.connect('learners.db')
+
+    # create a cursor object to execute SQL commands
+    c = conn.cursor()
+
+    record_id = record_id_entry.get()
+
+    c.execute("SELECT * from college_system WHERE username=? ", (currentUser,))
+    data = c.fetchone()
+    print(data)
+    conn.close()
+
+    # Populate entry fields with data
+    #
+    record_id_entry.insert(0, data[0])
+    record_id_entry.config(state=DISABLED)
+    first_name_entry.insert(0, data[1])
+    last_name_entry.insert(0, data[2])
+    gender_entry.insert(0, data[3])
+    dob_Entry.insert(0, data[4])
+    username_Entry.insert(0, data[5])
+    user_type_entry.insert(0, data[6])
+    password_Entry.insert(0, data[7])
+    confirm_password_Entry.insert(0, data[8])
+
+    def saveEdits():
+        pass
+# Add a button to trigger the data retrieval and entry field population
+    saveButton = Button(root, text="Save", command= saveEdits,)
+    saveButton.grid(row=10, column=0,columnspan=2,pady=15)
+
 def homePage():
     homePageWindow= Tk()
     homePageWindow.geometry('1280x1200')
 
-    currentUser='Hari Kumar'
-    currentUser_type= 'teacher'
+
 
     #CREATING THE NAVIGATION
     navigationBg = '#BE63D9'
@@ -566,7 +670,7 @@ def homePage():
     noticesButton.grid(row=0,column=3,padx=159)
     noticesIndicator = Frame(navigationFrame, width=180, height=6, bg=navigationBg,)
     noticesIndicator.place(x=820, y=40)
-    profileButton = Button(navigationFrame,bg=navigationBg,image=profileImage)
+    profileButton = Button(navigationFrame,bg=navigationBg,image=profileImage,command=editProfile)
     profileButton.grid(row=0,column=4)
     navigationFrame.pack(fill=X)
 
