@@ -3,15 +3,18 @@ from tkinter import ttk
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import datetime
-from PIL import ImageTk,Image
+from PIL import ImageTk, Image
 import sqlite3
-# from LoginWindow import
+from subprocess import call
+from LoginWindow import currentUser
+# print(currentUser=='')
 
-currentUser = 'Prabin Tiwari'
-currentUser_type ='student'
-#
+# currentUser = 'Prabin Tiwari'
+# currentUser_type = 'student'
 # currentUser = 'Hari Kumar'
-# currentUser_type='teacher'
+# currentUser_type = 'teacher'
+
+
 
 def lineBreaker(text):
     words = 0
@@ -26,21 +29,22 @@ def lineBreaker(text):
     return refactoredText
 
 
-
 def editProfile():
-    #creating the window
+    # creating the window
     root = Tk()
     root.geometry('600x600')
     root.title("Update CRUD")
+    global logoutImg
+    logoutImg=PhotoImage(file='LogOut.png')
 
-    label1 = Label(root, text="Edit your details",font=('x',27))
-    label1.grid(row=0, column=0,columnspan=2,pady=20)
+    label1 = Label(root, text="Edit your Profile", font=('x', 27))
+    label1.grid(row=0, column=0, columnspan=2, pady=20)
 
     # Add labels and entry widgets to update record
     record_id_label = Label(root, width=30, text="Record ID:")
     record_id_label.grid(row=1, column=0)
 
-    record_id_entry = Entry(root, width=30,)
+    record_id_entry = Entry(root, width=30, )
     record_id_entry.grid(row=1, column=1)
 
     first_name_label = Label(root, text="First Name:")
@@ -112,26 +116,36 @@ def editProfile():
     last_name_entry.insert(0, data[2])
     gender_entry.insert(0, data[3])
     dob_Entry.insert(0, data[4])
-    username_Entry.insert(0, data[5])
-    user_type_entry.insert(0, data[6])
+    username_Entry.insert(0, data[6])
+    user_type_entry.insert(0, data[5])
     password_Entry.insert(0, data[7])
     confirm_password_Entry.insert(0, data[8])
 
     def saveEdits():
-        pass
-# Add a button to trigger the data retrieval and entry field population
-    saveButton = Button(root, text="Save", command= saveEdits,)
-    saveButton.grid(row=10, column=0,columnspan=2,pady=15)
+        root.destroy()
+    def logout():
+        root.destroy()
+        homePageWindow.destroy()
+        call(['python3','LoginWindow.py'])
+
+
+
+    # Add a button to trigger the data retrieval and entry field population
+    saveButton = Button(root, text="Save", command=saveEdits, )
+    saveButton.grid(row=10, column=0, columnspan=2, pady=15)
+    logoutButton = Button(root,text='Log Out' ,fg='red',pady=5,command=logout)
+    logoutButton.grid(row =11,column=0,columnspan=2,pady=15)
+
+
 
 def homePage():
-    homePageWindow= Tk()
+    global homePageWindow
+    homePageWindow = Tk()
     homePageWindow.geometry('1280x1200')
 
-
-
-    #CREATING THE NAVIGATION
+    # CREATING THE NAVIGATION
     navigationBg = '#BE63D9'
-    profileImage=PhotoImage(file='profile.png')
+    profileImage = PhotoImage(file='profile.png')
 
     def subjectsData(subjectName):
         subjectsDataWindow = Tk()
@@ -193,31 +207,31 @@ def homePage():
         subjectsDataWindow.mainloop()
 
     def subjectPage():
-        subjectPageFrame= Frame(mainFrame,bg='#FFF1F0')
-        #images and making them global
-        global mathsImg,programmingImg,softwareDesignImg
-        mathsImg= PhotoImage(file='Mathscard.png')
+        subjectPageFrame = Frame(mainFrame, bg='#FFF1F0')
+        # images and making them global
+        global mathsImg, programmingImg, softwareDesignImg
+        mathsImg = PhotoImage(file='Mathscard.png')
         programmingImg = PhotoImage(file='Programmingcard.png')
         softwareDesignImg = PhotoImage(file='SoftwareDesignCard.png')
 
-        mathsButton = Button (subjectPageFrame,image=mathsImg,bd=0,bg='white',command=lambda: subjectsData('Mathematics'))
-        mathsButton.pack(side=LEFT,padx=(100,0))
-        programmingButton = Button(subjectPageFrame, bd=0,bg='white',image=programmingImg,command=lambda: subjectsData('Programming'))
-        programmingButton.pack(side=LEFT,padx=66)
-        softwareDesignButton = Button(subjectPageFrame,bd=0, bg='white',image=softwareDesignImg,command=lambda: subjectsData('Software Design'))
-        softwareDesignButton.pack(side=LEFT,padx=(0,100))
+        mathsButton = Button(subjectPageFrame, image=mathsImg, bd=0, bg='white',
+                             command=lambda: subjectsData('Mathematics'))
+        mathsButton.pack(side=LEFT, padx=(100, 0))
+        programmingButton = Button(subjectPageFrame, bd=0, bg='white', image=programmingImg,
+                                   command=lambda: subjectsData('Programming'))
+        programmingButton.pack(side=LEFT, padx=66)
+        softwareDesignButton = Button(subjectPageFrame, bd=0, bg='white', image=softwareDesignImg,
+                                      command=lambda: subjectsData('Software Design'))
+        softwareDesignButton.pack(side=LEFT, padx=(0, 100))
 
         subjectPageFrame.pack()
         subjectPageFrame.pack_propagate(False)
-        subjectPageFrame.config(width=1280,height=640,)
+        subjectPageFrame.config(width=1280, height=640, )
 
     def requestPage():
-        requestPageFrame= Frame(mainFrame,bg='#FFF1F0')
-
-
-
+        requestPageFrame = Frame(mainFrame, bg='#FFF1F0')
         # fonts,bg,images
-        global newRequestButtonImage, calendarImage,editButtonImage,deleteButtonImage
+        global newRequestButtonImage, calendarImage, editButtonImage, deleteButtonImage
         newRequestButtonImage = PhotoImage(file='Project_images/NewRequestButton.png')
         userIconImg = ImageTk.PhotoImage(Image.open('Project_images/Vector.png'))
         calendarImage = PhotoImage(file='Project_images/calendar.png')
@@ -229,16 +243,11 @@ def homePage():
         requestFrames_fg = 'black'
         edit_FrameBg = '#FFF5F1'
         edit_entryBg = '#BCC6BF'
-
-
-        # connecting to db and collection
+        # connecting to mongo db and collection
         address = "mongodb://localhost:27017"
         client = MongoClient(address)
         database = client.AppProject  # or client['AppProject']
         requestCollection = database['Requests']
-
-
-
         class Request:
             def __init__(self, master, id, date, title, description, sender, currentUser_type):
 
@@ -341,7 +350,6 @@ def homePage():
                                   description=data['description'], sender=data['sender'],
                                   currentUser_type=currentUser_type)
             # print(data['replies'])
-
         # again checking if it is student in requestPage then newRequestButton and its function will also be created
         # not combining it with above elif statement as newRequestButton should be packed last
         if currentUser_type == 'student':
@@ -415,18 +423,14 @@ def homePage():
 
         # requestCollection.insert_one(dummyRequest)
 
-
-
         requestPageFrame.pack()
         requestPageFrame.pack_propagate(False)
-        requestPageFrame.config(width=1280,height=640)
+        requestPageFrame.config(width=1280, height=640)
 
     def noticePage():
-        noticePageFrame = Frame(mainFrame,bg='white')
-
-
+        noticePageFrame = Frame(mainFrame, bg='white')
         # fonts,bg,images
-        global calendarImage,editButtonImage,deleteButtonImage
+        global calendarImage, editButtonImage, deleteButtonImage
         calendarImage = PhotoImage(file='Project_images/calendar.png')
         editButtonImage = PhotoImage(file='Project_images/EditB.png')
         deleteButtonImage = PhotoImage(file='Project_images/DeleteB.png')
@@ -436,17 +440,11 @@ def homePage():
         noticeFrames_fg = 'black'
         edit_FrameBg = '#FFF5F1'
         edit_entryBg = '#BCC6BF'
-
-
-        # connecting to db and collection
+        # connecting to monogodb and collection
         address = "mongodb://localhost:27017"
         client = MongoClient(address)
         database = client.AppProject  # or client['AppProject']
         noticeCollection = database['Notices']
-
-
-
-
 
         class Notice:
             def __init__(self, master, id, date, title, description, sender, currentUser_type):
@@ -480,8 +478,9 @@ def homePage():
                 print(self.newText)
                 self.descriptionLabel = Label(self.noticeFrame, text=self.newText,
                                               font=('x', noticeFrames_descriptionFontSize),
-                                              fg=noticeFrames_fg, justify="center",bg=noticeFrames_bg)  # bg=noticeFrames_bg,
-                self.descriptionLabel.pack(anchor=W,pady=10)  #
+                                              fg=noticeFrames_fg, justify="center",
+                                              bg=noticeFrames_bg)  # bg=noticeFrames_bg,
+                self.descriptionLabel.pack(anchor=W, pady=10)  #
                 if currentUser_type == 'teacher':
                     self.editButton = Button(self.noticeFrame, image=editButtonImage,
                                              borderwidth=0, command=self.editor)  # padx=26,pady=9,
@@ -489,7 +488,7 @@ def homePage():
                     self.deleteButton = Button(self.noticeFrame, image=deleteButtonImage, borderwidth=0,
                                                command=lambda: self.deleter(id=id, frame=self.noticeFrame))  # id=id,
                     self.deleteButton.pack(side=RIGHT, padx=17)
-                self.noticeFrame.pack(anchor=N,padx=100, pady=(20, 0), fill=X, expand=True)  #
+                self.noticeFrame.pack(anchor=N, padx=100, pady=(20, 0), fill=X, expand=True)  #
 
             # deleter method
             def deleter(self, id, frame):
@@ -543,8 +542,6 @@ def homePage():
 
                 self.editFrame.pack(fill=BOTH, expand=TRUE)
                 self.editWindow.mainloop()
-
-
 
         if currentUser_type == 'student':
             datas = noticeCollection.find()
@@ -616,7 +613,7 @@ def homePage():
 
             postNewButton = Button(noticePageFrame, text='Post New', padx=37, pady=18, bg='#B9E5FF', font=('x', 16),
                                    command=postNewWindow)
-            postNewButton.place(x=100,y=535)
+            postNewButton.place(x=100, y=535)
 
         # Creating dummy notices
         # dummyNotices = [
@@ -636,12 +633,11 @@ def homePage():
         # noticeCollection.insert_many(dummyNotices)
         # print(noticesFramesDict['2'])
 
-
         noticePageFrame.pack()
         noticePageFrame.pack_propagate(False)
         noticePageFrame.config(width=1280, height=640)
 
-    def indicatorAndPage(indicator,page):
+    def indicatorAndPage(indicator, page):
         subjectsIndicator.config(bg=navigationBg)
         requestsIndicator.config(bg=navigationBg)
         noticesIndicator.config(bg=navigationBg)
@@ -651,75 +647,76 @@ def homePage():
         indicator.config(bg='#FFFFFF')
         page()
 
+    navigationFrame = Frame(homePageWindow, bg=navigationBg, height=67, pady=10)
+    learnersLabel = Label(navigationFrame, text='Learners', font=('Brush Script MT', 28), fg='black', bg=navigationBg)
+    learnersLabel.grid(row=0, column=0, padx=(25, 0))
+    subjectsButton = Button(navigationFrame, text='Subjects', font=('x', 25), fg='black', bg=navigationBg, bd=0,
+                            command=lambda: indicatorAndPage(subjectsIndicator, subjectPage))
+    subjectsButton.grid(row=0, column=1, padx=(159, 0))
+    subjectsIndicator = Frame(navigationFrame, width=180, height=6, bg=navigationBg)
+    subjectsIndicator.place(x=245, y=40)
 
-    navigationFrame = Frame(homePageWindow,bg=navigationBg,height=67,pady=10)
-    learnersLabel = Label(navigationFrame,text='Learners',font=('Brush Script MT',28),fg='black',bg=navigationBg)
-    learnersLabel.grid(row=0,column=0,padx=(25,0))
-    subjectsButton = Button(navigationFrame,text='Subjects',font=('x',25),fg='black',bg=navigationBg,bd=0,command=lambda:indicatorAndPage(subjectsIndicator,subjectPage))
-    subjectsButton.grid(row=0,column=1,padx=(159,0))
-    subjectsIndicator = Frame(navigationFrame,width=180,height=6,bg=navigationBg)
-    subjectsIndicator.place(x=245,y=40)
-
-
-    requestsButton = Button(navigationFrame,text='Requests',font=('x',25),fg='black',bg=navigationBg,bd=0,command=lambda:indicatorAndPage(requestsIndicator,requestPage))
-    requestsButton.grid(row=0,column=2,padx=(159,0))
-    requestsIndicator = Frame(navigationFrame, width=180, height=6, bg=navigationBg,)
+    requestsButton = Button(navigationFrame, text='Requests', font=('x', 25), fg='black', bg=navigationBg, bd=0,
+                            command=lambda: indicatorAndPage(requestsIndicator, requestPage))
+    requestsButton.grid(row=0, column=2, padx=(159, 0))
+    requestsIndicator = Frame(navigationFrame, width=180, height=6, bg=navigationBg, )
     requestsIndicator.place(x=535, y=40)
 
-    noticesButton = Button(navigationFrame,text='Notices',font=('x',25),fg='black',bg=navigationBg,bd=0,command=lambda:indicatorAndPage(noticesIndicator,noticePage))
-    noticesButton.grid(row=0,column=3,padx=159)
-    noticesIndicator = Frame(navigationFrame, width=180, height=6, bg=navigationBg,)
+    noticesButton = Button(navigationFrame, text='Notices', font=('x', 25), fg='black', bg=navigationBg, bd=0,
+                           command=lambda: indicatorAndPage(noticesIndicator, noticePage))
+    noticesButton.grid(row=0, column=3, padx=159)
+    noticesIndicator = Frame(navigationFrame, width=180, height=6, bg=navigationBg, )
     noticesIndicator.place(x=820, y=40)
-    profileButton = Button(navigationFrame,bg=navigationBg,image=profileImage,command=editProfile)
-    profileButton.grid(row=0,column=4)
+    profileButton = Button(navigationFrame, bg=navigationBg, image=profileImage, command=editProfile)
+    profileButton.grid(row=0, column=4)
     navigationFrame.pack(fill=X)
 
-#creating the main frame
-    mainFrameBg= 'white'
-    mainFrame = Frame(homePageWindow,bg=mainFrameBg)
-    global growImg,bookImg,personImg,textImg
+    # creating the main frame
+    mainFrameBg = 'white'
+    mainFrame = Frame(homePageWindow, bg=mainFrameBg)
+    global growImg, bookImg, personImg, textImg
     growImg = PhotoImage(file='Project_images/grow.png')
-    bookImg= PhotoImage(file='Project_images/Vector-2.png')
-    personImg =PhotoImage(file='Project_images/Vector-1.png')
-    textImg=PhotoImage(file='Project_images/Vector.png')
+    bookImg = PhotoImage(file='Project_images/Vector-2.png')
+    personImg = PhotoImage(file='Project_images/Vector-1.png')
+    textImg = PhotoImage(file='Project_images/Vector.png')
 
-    growImgLabel= Label(mainFrame,bg=mainFrameBg,image=growImg)#this is column1
-    growImgLabel.pack(padx=(75,50),side=LEFT)
-    bigColumn2=Frame(mainFrame,bg=mainFrameBg)
-    valueLabel = Label(bigColumn2,justify=LEFT,text='We provide Students & Teachers\na platfrom to',font=('Inter',38,'bold'),fg='black',bg=mainFrameBg)
+    growImgLabel = Label(mainFrame, bg=mainFrameBg, image=growImg)  # this is column1
+    growImgLabel.pack(padx=(75, 50), side=LEFT)
+    bigColumn2 = Frame(mainFrame, bg=mainFrameBg)
+    valueLabel = Label(bigColumn2, justify=LEFT, text='We provide Students & Teachers\na platfrom to',
+                       font=('Inter', 38, 'bold'), fg='black', bg=mainFrameBg)
     valueLabel.pack()
-    growLabel = Label(bigColumn2, text='GROW', font=('Inter', 38, 'bold'),fg='#40A17B',bg=mainFrameBg)
-    growLabel.place(x=260,y=50)
-    subHeading = Label(bigColumn2,font=('Inter', 20),fg='black',bg=mainFrameBg,justify=LEFT,text='Trusted by hundreds of  organiztions to host their learning \nmaterials and create portal for managing\ntheir system')
-    subHeading.place(x=16,y=133)
-    bookImgLabel=Label(bigColumn2,image=bookImg,bg=mainFrameBg)
-    bookImgLabel.place(x=68,y=300)
-    subjectDescLabel= Label(bigColumn2,fg='black',bg=mainFrameBg,font=('Inter',16),justify=LEFT,text='Acees subjects you\nare enrolled to ')
-    subjectDescLabel.place(x=20,y=360)
-    personImgLabel = Label(bigColumn2,image=personImg, bg=mainFrameBg)
+    growLabel = Label(bigColumn2, text='GROW', font=('Inter', 38, 'bold'), fg='#40A17B', bg=mainFrameBg)
+    growLabel.place(x=260, y=50)
+    subHeading = Label(bigColumn2, font=('Inter', 20), fg='black', bg=mainFrameBg, justify=LEFT,
+                       text='Trusted by hundreds of  organiztions to host their learning \nmaterials and create portal for managing\ntheir system')
+    subHeading.place(x=16, y=133)
+    bookImgLabel = Label(bigColumn2, image=bookImg, bg=mainFrameBg)
+    bookImgLabel.place(x=68, y=300)
+    subjectDescLabel = Label(bigColumn2, fg='black', bg=mainFrameBg, font=('Inter', 16), justify=LEFT,
+                             text='Accees subjects you\nare enrolled to ')
+    subjectDescLabel.place(x=20, y=360)
+    personImgLabel = Label(bigColumn2, image=personImg, bg=mainFrameBg)
     personImgLabel.place(x=295, y=300)
-    personDescLabel = Label(bigColumn2,fg='black', bg=mainFrameBg, font=('Inter', 16), justify=LEFT,
-                             text='Acees subjects you\nare enrolled to ')
+    personDescLabel = Label(bigColumn2, fg='black', bg=mainFrameBg, font=('Inter', 16), justify=LEFT,
+                            text='Request your teacher\nfor any help ')
     personDescLabel.place(x=240, y=360)
-    textImgLabel=Label(bigColumn2,image=textImg, bg=mainFrameBg)
+    textImgLabel = Label(bigColumn2, image=textImg, bg=mainFrameBg)
     textImgLabel.place(x=508, y=300)
     noticeDescLabel = Label(bigColumn2, fg='black', bg=mainFrameBg, font=('Inter', 16), justify=LEFT,
-                             text='View the notices and\nimportant anouncements ')
+                            text='View the notices and\nimportant anouncements ')
     noticeDescLabel.place(x=445, y=360)
 
     bigColumn2.pack(side=LEFT)
     bigColumn2.pack_propagate(False)
-    bigColumn2.config(width=653,height=453)
+    bigColumn2.config(width=653, height=453)
 
     mainFrame.pack()
     mainFrame.pack_propagate(False)
-    mainFrame.config(width=1280,height=640)
-
-
+    mainFrame.config(width=1280, height=640)
 
     # frame of footer part------------------------------------------------------
-    frameofblack = Frame(homePageWindow, width=1280,height=100, bg="#1D1D1D")
-
+    frameofblack = Frame(homePageWindow, width=1280, height=100, bg="#1D1D1D")
 
     # label of footer parts----------------------------------------------------------------------
     aboutus = Label(frameofblack, text="About Us", font=("Inter Normal", 15, "bold"), bg="#1D1D1D", fg="white")
@@ -843,5 +840,6 @@ def homePage():
     #
     # footerFrame.pack()
     homePageWindow.mainloop()
+
 
 homePage()
