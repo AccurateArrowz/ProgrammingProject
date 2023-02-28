@@ -1,16 +1,17 @@
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk,messagebox
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import datetime
 from PIL import ImageTk, Image
 import sqlite3
 from subprocess import call
-from LoginWindow import currentUser
+# from LoginWindow import currentUser
 # print(currentUser=='')
 
-# currentUser = 'Prabin Tiwari'
-# currentUser_type = 'student'
+currentUser = 'Prabin Tiwari'
+currentUser_username = 'prabinPro'
+currentUser_type = 'student'
 # currentUser = 'Hari Kumar'
 # currentUser_type = 'teacher'
 
@@ -103,10 +104,10 @@ def editProfile():
 
     record_id = record_id_entry.get()
 
-    c.execute("SELECT * from college_system WHERE username=? ", (currentUser,))
+    c.execute("SELECT * from college_system WHERE username=? ", (currentUser_username,))
     data = c.fetchone()
-    print(data)
-    conn.close()
+    # print('hey', data)
+
 
     # Populate entry fields with data
     #
@@ -122,7 +123,77 @@ def editProfile():
     confirm_password_Entry.insert(0, data[8])
 
     def saveEdits():
-        root.destroy()
+        #empty field check
+        if first_name_entry.get()=='' or last_name_entry.get()=='' or gender_entry.get()=='' or dob_Entry=='' or user_type_entry.get()=='' or username_Entry=='' or password_Entry=='' or confirm_password_Entry=='' or first_name_entry.get() == None or last_name_entry.get() == None or gender_entry.get() == None or dob_Entry == None or user_type_entry.get() == None or username_Entry == None or password_Entry == None or confirm_password_Entry == None :
+            messagebox.showerror('Error', 'All fields are required')
+            return
+        elif password_Entry.get() !=confirm_password_Entry.get() :
+            messagebox.showerror('Error', 'Password and Confirm password should match before update')
+            return
+        global currentUser_username
+        updatedUsername = username_Entry.get()
+        #checking if the user wants to update everything other than his username
+        if updatedUsername == currentUser_username:
+            c.execute("""UPDATE college_system SET
+                                               "first_name"= :updated_first_name,
+                                               "last_name"= :updated_last_name,
+                                               "gender"= :updated_gender,
+                                               "date_of_birth"= :updated_dob,
+                                               "user_type"= :updated_user_type,
+                                               "username"= :updated_username,
+                                               "password"= :updated_password,
+                                               "confirm_password"= :updated_confirm_password
+                                       WHERE username = :username """,
+                      {"updated_first_name": first_name_entry.get(),
+                       "updated_last_name": last_name_entry.get(),
+                       "updated_gender": gender_entry.get(),
+                       "updated_dob": dob_Entry.get(),
+                       "updated_user_type": user_type_entry.get(),
+                       "updated_username": username_Entry.get(),
+                       "updated_password": password_Entry.get(),
+                       "updated_confirm_password": confirm_password_Entry.get(),
+                       "username": currentUser_username
+                       })
+            conn.commit()
+            conn.close()
+            root.destroy()
+            return
+
+        #following lines will be executed if the if statement is not fulfilled(Note: there is 'return' in the above if block)
+        c.execute("SELECT * FROM college_system where username=? ",
+                  (updatedUsername,))
+        record = c.fetchone()
+        if record == None:
+            c.execute("""UPDATE college_system SET
+                                   "first_name"= :updated_first_name,
+                                   "last_name"= :updated_last_name,
+                                   "gender"= :updated_gender,
+                                   "date_of_birth"= :updated_dob,
+                                   "user_type"= :updated_user_type,
+                                   "username"= :updated_username,
+                                   "password"= :updated_password,
+                                   "confirm_password"= :updated_confirm_password
+                           WHERE username = :username """,
+                      {"updated_first_name": first_name_entry.get(),
+                       "updated_last_name": last_name_entry.get(),
+                       "updated_gender": gender_entry.get(),
+                       "updated_dob": dob_Entry.get(),
+                       "updated_user_type": user_type_entry.get(),
+                       "updated_username": username_Entry.get(),
+                       "updated_password": password_Entry.get(),
+                       "updated_confirm_password": confirm_password_Entry.get(),
+                       "username": currentUser_username
+                       })
+            currentUser_username = updatedUsername
+            conn.commit()
+            conn.close()
+            root.destroy()
+        else :
+            messagebox.showinfo("Success", f"cannot change username to  '{updatedUsername}' as it is already taken")
+
+
+
+
     def logout():
         root.destroy()
         homePageWindow.destroy()

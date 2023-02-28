@@ -5,6 +5,7 @@ from PIL import ImageTk, Image
 from subprocess import call
 
 
+
 pswdButtonClicked = 0
 confirmPswdButtonClicked = 0
 loginEyeClicked = 0
@@ -135,11 +136,11 @@ def signup():
 
     def on_leave_1(e):
         if user_5.get() == '':
-            user_5.insert(0, ' Date')
+            user_5.insert(0, ' Day')
 
     user_5 = Entry(registerFrame, fg='black', bg='white', font=('Inter Normal', 14), width=5)
     user_5.place(x=238, y=276)
-    user_5.insert(0, ' Date')
+    user_5.insert(0, ' Day')
     user_5.bind("<FocusIn>", on_enter_1)
     user_5.bind("<FocusOut>", on_leave_1)
 
@@ -247,7 +248,12 @@ def signup():
         elif user_1.get() == '' or user_2.get() == '' or user_3.get() == '' or user_4.get() == '' or user_5.get() == '' or user_6.get() == '' or user7_var.get() == '' or user_8.get() == '':
             messagebox.showerror('Error', 'All fields are required')
             return
-
+        elif user_3.get().isdigit() ==False or user_4.get().isdigit() ==False or user_5.get().isdigit() ==False:
+            messagebox.showerror('Error', 'Date of birth must be inserted in digits')
+            return
+        elif int(user_3.get())<1850 or int(user_4.get())>12 or int(user_5.get())>32:
+            messagebox.showerror('Error', 'Your date of birth is invalid')
+            return
         elif len(user_7.get()) < 7:
             messagebox.showerror("Error", "Password should contain at least 6 character", parent=signUpWindow)
             return
@@ -257,85 +263,63 @@ def signup():
         elif user_7.get() == user_8.get():
             conn = sqlite3.connect('learners.db')
             c = conn.cursor()
-            # Create table
-            c.execute("""CREATE TABLE IF NOT EXISTS college_system(
-                                           id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                           first_name TEXT NOT NULL,
-                                           last_name TEXT NOT NULL,
-                                           gender TEXT NOT NULL,
-                                           date_of_birth INTEGER NOT NULL,
-                                           user_type TEXT NOT NULL,
-                                           username TEXT NOT NULL,
-                                           password TEXT NOT NULL,
-                                           confirm_password TEXT NOT NULL
-                                           )""")
-            print("Table created successfully")
+            c.execute("SELECT * FROM college_system where username=? ",
+                          (usernameEntry.get(),))
+            record = c.fetchone()
 
-            # Extract the values entered by the user
-            first_name = user_1.get()
-            last_name = user_2.get()
-            gender = gender_var.get()
-            dob = str(user_3.get()) + '-' + str(user_4.get()) + '-' + str(user_5.get())
-            user_type = user7_var.get()
-            username = user_6.get()
-            password = user_7.get()
-            confirm_password = user_8.get()
+            if record is None: #i.e username is not taken already
+                c.execute("""CREATE TABLE IF NOT EXISTS college_system(
+                                                           id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                                           first_name TEXT NOT NULL,
+                                                           last_name TEXT NOT NULL,
+                                                           gender TEXT NOT NULL,
+                                                           date_of_birth INTEGER NOT NULL,
+                                                           user_type TEXT NOT NULL,
+                                                           username TEXT NOT NULL,
+                                                           password TEXT NOT NULL,
+                                                           confirm_password TEXT NOT NULL
+                                                           )""")
+                # Extract the values entered by the user
+                first_name = user_1.get()
+                last_name = user_2.get()
+                gender = gender_var.get()
+                dob = str(user_3.get()) + '-' + str(user_4.get()) + '-' + str(user_5.get())
+                user_type = user7_var.get()
+                username = user_6.get()
+                password = user_7.get()
+                confirm_password = user_8.get()
 
-            # Store the values in a dictionary
-            data = {
-                "first_name": first_name,
-                "lastname": last_name,
-                "gender": gender,
-                "date_of_birth": dob,
-                "user_type": user_type,
-                "username": username,
-                "password": password,
-                "confirm_password": confirm_password
-            }
+                # Store the values in a dictionary
+                data = {
+                    "first_name": first_name,
+                    "lastname": last_name,
+                    "gender": gender,
+                    "date_of_birth": dob,
+                    "user_type": user_type,
+                    "username": username,
+                    "password": password,
+                    "confirm_password": confirm_password
+                }
 
-            query = f"INSERT INTO college_system (first_name, last_name, gender, date_of_birth, user_type, username, password, confirm_password) VALUES('{first_name}','{last_name}', '{gender}', '{dob}','{user_type}','{username}','{password}','{confirm_password}')"
-            print(query)
-
-            try:
-                c.execute(query)
-                conn.commit()
-                print("Data added successfully")
-            except Exception as e:
-                print(f"Error:{str(e)}")
-                conn.rollback()
-            c.close()
-            conn.close()
-            signUpWindow.destroy()
-
-            # Show a success message
-            messagebox.showinfo("Success", "Data inserted successfully ✅")
-
-            # to view the database
-            def query():
-                # create a databases or connect to one
-                conn = sqlite3.connect('learners.db')
-
-                # create cursor
-                c = conn.cursor()
-
-                # query of the database
-                c.execute("SELECT *, oid FROM college_system")
-
-                records = c.fetchall()
-                print(records)
-
-                # loop through the results
-                print_record = ''
-                for record in records:
-                    print_record += str(record[0]) + ' ' + str(record[1]) + ' ' + '\t' + str(
-                        record[8]) + '\n'
-
-                conn.commit()
+                query = f"INSERT INTO college_system (first_name, last_name, gender, date_of_birth, user_type, username, password, confirm_password) VALUES('{first_name}','{last_name}', '{gender}', '{dob}','{user_type}','{username}','{password}','{confirm_password}')"
+                messagebox.showinfo("Success", "Data inserted successfully ✅")
+                c.close()
                 conn.close()
+                signUpWindow.destroy()
 
-                # create query button
-                query_btn = Button(loginWindow, text='Show Records', command=query)
-                query_btn.grid(row=11, column=2, columnspan=2, pady=10, padx=10, ipadx=100)
+                try:
+                    c.execute(query)
+                    conn.commit()
+                    print("Data added successfully")
+                except Exception as e:
+                    print(f"Error:{str(e)}")
+                    conn.rollback()
+            else:
+                username= user_6.get()
+                print(f'username "{username}" is already taken')
+                messagebox.showinfo("Success",f"Username '{username}' is already taken")
+
+
 
     button_register = Button(registerFrame, pady=3, width=8, height=-9, border=0, text="Register", bg="#39339B",fg='black',
                               font=("Inter Normal", 16,'bold'), command=signup_function)
@@ -376,7 +360,6 @@ def login_authentication():
             print(currentUser)
             loginWindow.destroy()
             call(["python3", "HomeWindow.py"])
-            #home page will be created if record exists
 
         conn.commit()
         conn.close()
