@@ -6,6 +6,7 @@ from subprocess import call
 
 
 
+
 pswdButtonClicked = 0
 confirmPswdButtonClicked = 0
 loginEyeClicked = 0
@@ -112,7 +113,7 @@ def signup():
     dob = Label(registerFrame, text="Date of Birth", font=('Inter Normal', 15), bg='#E2C5ED', fg="black")
     dob.place(x=75, y=237)
 
-    DOBimage = PhotoImage(file='DOB.png')
+    DOBimage = PhotoImage(file='Project_images/DOB.png')
     DOBimage = DOBimage.zoom(15)  # with 250, I ended up running out of memory
     DOBimage = DOBimage.subsample(20)
     imageofdob = Label(signUpWindow, image=DOBimage, bg='#E2C5ED')
@@ -160,7 +161,7 @@ def signup():
     user_6.bind("<FocusIn>", on_enter_1)
     user_6.bind("<FocusOut>", on_leave_1)
 
-    # userimage=PhotoImage(file='Group.png')
+    # userimage=PhotoImage(file='Project_images/Group.png')
     # userimage= userimage.zoom(16) #with 250, I ended up running out of memory
     # userimage = userimage.subsample(20)
     # imageofuser=Label(signUpWindow,image=userimage,bg='white')
@@ -326,7 +327,7 @@ def signup():
     button_register.place(x=150, y=515)
 
     global image_2
-    image_2 = PhotoImage(file='Rectangle 6.png')
+    image_2 = PhotoImage(file='Project_images/Rectangle 6.png')
     image_2 = image_2.zoom(30)
     image_2 = image_2.subsample(32)
     signUp_ideaImg = Label(signUpWindow, image=image_2, bg="#F3EEE5")
@@ -369,7 +370,7 @@ def login_authentication():
 
 
 # photo of log in page-----------------------------------------------
-imgpath = 'Rectangle 1.png'
+imgpath = 'Project_images/Rectangle 1.png'
 img = PhotoImage(file=imgpath)
 img = img.zoom(33)
 img = img.subsample(32)
@@ -393,7 +394,7 @@ usernameEntry = Entry(loginFrame, bg="White", width=21, font=('Inter Normal', 16
 usernameEntry.place(x=30, y=120)
 
 # username_______icon------------------------------------------------------
-imgpath_1 = 'user (2).png'
+imgpath_1 = 'Project_images/user (2).png'
 Username_image = PhotoImage(file=imgpath_1)
 
 Label(loginWindow, image=Username_image, bg='#F3EEE5').place(x=945, y=275)
@@ -411,7 +412,7 @@ label = Label(loginFrame, text="Don't have an account?", fg='black', bg='#F3EEE5
 label.place(x=40, y=280)
 
 # password____icon-------------------------------------------------
-imgpath_2 = 'ABC.png'
+imgpath_2 = 'Project_images/ABC.png'
 password_image = PhotoImage(file=imgpath_2)
 password_image = password_image.zoom(30)
 password_image = password_image.subsample(32)
@@ -421,7 +422,7 @@ Label(loginWindow, image=password_image, bg='#F3EEE5').place(x=952, y=356)
 
 # eye icon-----------------------------------------------------------------------
 
-eyeImg = PhotoImage(file='view.png')
+eyeImg = PhotoImage(file='Project_images/view.png')
 showPswdButton = Button(loginFrame, image=eyeImg, bg="#F3EEE5", bd=0,command=showLoginPswd)
 showPswdButton.place(x=260, y=199)
 

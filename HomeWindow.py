@@ -9,13 +9,13 @@ from subprocess import call
 # from LoginWindow import currentUser
 # print(currentUser=='')
 
+
+
 currentUser = 'Prabin Tiwari'
 currentUser_username = 'prabinPro'
 currentUser_type = 'student'
 # currentUser = 'Hari Kumar'
 # currentUser_type = 'teacher'
-
-
 
 def lineBreaker(text):
     words = 0
@@ -36,7 +36,6 @@ def editProfile():
     root.geometry('600x600')
     root.title("Update CRUD")
     global logoutImg
-    logoutImg=PhotoImage(file='LogOut.png')
 
     label1 = Label(root, text="Edit your Profile", font=('x', 27))
     label1.grid(row=0, column=0, columnspan=2, pady=20)
@@ -216,7 +215,7 @@ def homePage():
 
     # CREATING THE NAVIGATION
     navigationBg = '#BE63D9'
-    profileImage = PhotoImage(file='profile.png')
+    profileImage = PhotoImage(file='Project_images/profile.png')
 
     def subjectsData(subjectName):
         subjectsDataWindow = Tk()
@@ -281,9 +280,9 @@ def homePage():
         subjectPageFrame = Frame(mainFrame, bg='#FFF1F0')
         # images and making them global
         global mathsImg, programmingImg, softwareDesignImg
-        mathsImg = PhotoImage(file='Mathscard.png')
-        programmingImg = PhotoImage(file='Programmingcard.png')
-        softwareDesignImg = PhotoImage(file='SoftwareDesignCard.png')
+        mathsImg = PhotoImage(file='Project_images/Mathscard.png')
+        programmingImg = PhotoImage(file='Project_images/Programmingcard.png')
+        softwareDesignImg = PhotoImage(file='Project_images/SoftwareDesignCard.png')
 
         mathsButton = Button(subjectPageFrame, image=mathsImg, bd=0, bg='white',
                              command=lambda: subjectsData('Mathematics'))
@@ -303,11 +302,11 @@ def homePage():
         requestPageFrame = Frame(mainFrame, bg='#FFF1F0')
         # fonts,bg,images
         global newRequestButtonImage, calendarImage, editButtonImage, deleteButtonImage
-        newRequestButtonImage = PhotoImage(file='Project_images/NewRequestButton.png')
         userIconImg = ImageTk.PhotoImage(Image.open('Project_images/Vector.png'))
-        calendarImage = PhotoImage(file='Project_images/calendar.png')
-        editButtonImage = PhotoImage(file='Project_images/EditB.png')
-        deleteButtonImage = PhotoImage(file='Project_images/DeleteB.png')
+        newRequestButtonImage= ImageTk.PhotoImage(Image.open('Project_images/NewRequestButton.png'))
+        calendarImage= ImageTk.PhotoImage(Image.open('Project_images/calendar2.png'))
+        editButtonImage= ImageTk.PhotoImage(Image.open('Project_images/EditB.png'))
+        deleteButtonImage = ImageTk.PhotoImage(Image.open('Project_images/DeleteB.png'))
         requestFrames_titleFontSize = 22
         requestFrames_descriptionFontSize = 16
         requestFrames_bg = '#B8B0F3'
@@ -502,9 +501,6 @@ def homePage():
         noticePageFrame = Frame(mainFrame, bg='white')
         # fonts,bg,images
         global calendarImage, editButtonImage, deleteButtonImage
-        calendarImage = PhotoImage(file='Project_images/calendar.png')
-        editButtonImage = PhotoImage(file='Project_images/EditB.png')
-        deleteButtonImage = PhotoImage(file='Project_images/DeleteB.png')
         noticeFrames_titleFontSize = 22
         noticeFrames_descriptionFontSize = 16
         noticeFrames_bg = '#FFECE4'
@@ -748,7 +744,7 @@ def homePage():
     global growImg, bookImg, personImg, textImg
     growImg = PhotoImage(file='Project_images/grow.png')
     bookImg = PhotoImage(file='Project_images/Vector-2.png')
-    personImg = PhotoImage(file='Project_images/Vector-1.png')
+    personImg=PhotoImage(file='Project_images/Vector-1.png')
     textImg = PhotoImage(file='Project_images/Vector.png')
 
     growImgLabel = Label(mainFrame, bg=mainFrameBg, image=growImg)  # this is column1
@@ -817,25 +813,25 @@ def homePage():
     followus.place(x=800, y=2)
 
     # photos downwards the follow us part----------------------------------------------------------------
-    instaimage = PhotoImage(file="insta.png")
+    instaimage = PhotoImage(file="Project_images/insta.png")
     instaimage = instaimage.zoom(16)
     instaimage = instaimage.subsample(20)
     panel_7 = Label(frameofblack, image=instaimage, bg="#1D1D1D")
     panel_7.place(x=805, y=35)
 
-    fbimage = PhotoImage(file="facebook.png")
+    fbimage = PhotoImage(file="Project_images/facebook.png")
     fbimage = fbimage.zoom(16)
     fbimage = fbimage.subsample(20)
     panel_8 = Label(frameofblack, image=fbimage, bg="#1D1D1D")
     panel_8.place(x=825, y=35)
 
-    limage = PhotoImage(file="linkedin.png")
+    limage = PhotoImage(file="Project_images/linkedin.png")
     limage = limage.zoom(16)
     limage = limage.subsample(20)
     panel_9 = Label(frameofblack, image=limage, bg="#1D1D1D")
     panel_9.place(x=845, y=35)
 
-    timage = PhotoImage(file="twitter.png")
+    timage = PhotoImage(file="Project_images/twitter.png")
     timage = timage.zoom(16)
     timage = timage.subsample(20)
     panel_10 = Label(frameofblack, image=timage, bg="#1D1D1D")
@@ -867,10 +863,10 @@ def homePage():
 
     # #Creating the black footer
     # footerBg = '#1D1D1D'
-    # instaImg=PhotoImage(file='insta.png')
-    # facebookImg=PhotoImage(file='facebook.png')
-    # linkedinImg=PhotoImage(file='linkedin.png')
-    # twitterImg=PhotoImage(file='twitter.png')
+    # instaImg=PhotoImage(file='Project_images/insta.png')
+    # facebookImg=PhotoImage(file='Project_images/facebook.png')
+    # linkedinImg=PhotoImage(file='Project_images/linkedin.png')
+    # twitterImg=PhotoImage(file='Project_images/twitter.png')
     #
     #
     #
